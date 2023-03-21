@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Launch Library
-  version: v2.2.0
+  version: 1.0.0
   description: ""
   contact:
     name: The Space Devs
@@ -683,7 +683,7 @@ paths:
         name: id
         schema:
           type: integer
-        description: 
+        description: Id
         required: true
       tags:
       - location
@@ -741,8 +741,7 @@ paths:
         name: onboard_crew__gte
         schema:
           type: integer
-    
-          type: integer
+  
       - in: query
         name: onboard_crew__lte
         schema:
