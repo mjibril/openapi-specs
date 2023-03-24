@@ -1,0 +1,330 @@
+openapi: 3.0.1
+servers:
+  - url: https://restcountries.com
+info:
+  title: rest-countries
+  description: |
+    Get information about countries via a RESTful API. Available fields that are returned include are listed below. If using multiple fields, pass as comma-separated string in the fields , for example name,status,continents <br><br>
+    1. name
+    2. tld
+    3. cca2
+    4. ccn3
+    5. cca3
+    6. cioc
+    7. independent
+    8. status
+    9. unMember
+    10. currencies
+    11. idd
+    12. capital
+    13. altSpellings
+    14. region
+    15. subregion
+    16. languages
+    17. translations
+    18. latlng
+    19. landlocked
+    20. borders
+    21. area
+    22. demonyms
+    23. flag
+    24. maps
+    25. population
+    26. gini
+    27. fifa
+    28. car
+    29. timezones
+    30. continents
+    31. flags
+    32. coatOfArms
+    33. startOfWeek
+    34. capitalInfo
+    35. postalCode.
+  contact:
+    name: Alejandro Matos
+    url: https://restcountries.com
+  license:
+    name: Mozilla Public License MPL 2.0
+    url: https://www.mozilla.org/en-US/MPL/2.0/
+  version: '3.1'
+paths:
+  /v3.1/all:
+    get:
+      operationId: getAllCountries
+      summary:  "Get a list of all the countries and their details. This includes all fields like population, timezones, currency, continents and others." 
+      parameters:
+        - name: fields
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: getAllCountries default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestCountries'
+  /v3.1/alpha/{alphacode}:
+    get:
+      operationId: getByAlpha
+      summary:  "Search by cca2, ccn3, cca3 or cioc country code"
+      parameters:
+        - name: alphacode
+          in: path
+          required: true
+          description: "cca2, ccn3, cca3 or cioc country code" 
+          schema:
+            type: string
+        - name: fields
+          in: query
+          description: list of comma separated fields to return
+          schema:
+            type: string
+      responses:
+        default:
+          description: getByAlpha default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestCountries'
+  /v3.1/alpha/:
+    get:
+      operationId: getByAlphaList
+      parameters:
+        - name: codes
+          in: query
+          required: true
+          description: list of comma separated cca2, ccn3, cca3 or cioc country code 
+          schema:
+            type: string
+        - name: fields
+          in: query
+          description: list of comma separated fields to return
+          schema:
+            type: string
+      responses:
+        default:
+          description: getByAlphaList default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestCountries'
+  /v3.1/currency/{currency}:
+    get:
+      operationId: getByCurrency
+      summary:  Find a country/countries using its/their currency code e.g usd, gbp
+      parameters:
+        - name: currency
+          in: path
+          required: true
+          schema:
+            type: string
+          description:  Currency code
+        - name: fields
+          in: query
+          description: list of comma separated fields to return
+          schema:
+            type: string
+      responses:
+        default:
+          description: getByCurrency default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestCountries'
+  /v3.1/name/{name}:
+    get:
+      operationId: getByName
+      summary: Get a country by its name
+      parameters:
+        - name: name
+          in: path
+          required: true
+          description: Name of the country
+          schema:
+            type: string
+        - name: fullText
+          in: query
+      
+          description: Indicates if the name should be matched fully by text or to be searched. Set true to match the name exactly and false for search. 
+          schema:
+            type: boolean
+        - name: fields
+          in: query
+          description: list of comma separated fields to return
+          schema:
+            type: string
+      responses:
+        default:
+          description: getByName default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestCountries'
+  /v3.1/capital/{capital}:
+    get:
+      operationId: getByCapital
+      summary: Get a country from its capital city/state
+      parameters:
+        - name: capital
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: fields
+          description: list of comma separated fields to return
+          in: query
+          schema:
+            type: string
+      responses:
+        default:
+          description: getByCapital default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestCountries'
+  /v3.1/region/{region}:
+    get:
+      operationId: getByContinent
+      summary: Get countries in a specific continent
+      parameters:
+        - name: region
+          in: path
+          required: true
+          description: Continent name 
+          schema:
+            type: string
+        - name: fields
+          in: query
+          description: list of comma separated fields to return
+          schema:
+            type: string
+      responses:
+        default:
+          description: getByContinent default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestCountries'
+  /v3.1/subregion/{subregion}:
+    get:
+      operationId: getBySubRegion
+      summary: Get countries in a subregion e.g Nothern Europe 
+      parameters:
+        - name: subregion
+          description: The name of the subregion
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: fields
+          description: list of comma separated fields to return
+          in: query
+          schema:
+            type: string
+      responses:
+        default:
+          description: getBySubRegion default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestCountries'
+  /v3.1/lang/{lang}:
+    get:
+      operationId: getByLanguage
+      summary: Get a list of countries by language
+      parameters:
+        - name: lang
+          description: the language e.g. spanish
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: fields
+          description: list of comma separated fields to return
+          in: query
+          schema:
+            type: string
+      responses:
+        default:
+          description: getByLanguage default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestCountries'
+  /v3.1/demonym/{demonym}:
+    get:
+      operationId: getByDemonym
+      summary:  Get country from demonym e.g. american
+      parameters:
+        - name: demonym
+          in: path
+          description: Demonym e.g. canadian, american 
+          required: true
+          schema:
+            type: string
+        - name: fields
+          description: list of comma separated fields to return
+          in: query
+          schema:
+            type: string
+      responses:
+        default:
+          description: getByDemonym default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestCountries'
+  /v3.1/translation/{translation}:
+    get:
+      operationId: getByTranslation
+      summary : Get a country by its translated name e.g.  alemania for germany
+      parameters:
+        - name: translation
+          in: path
+          description: Country name in a different language e.g. alemania
+          required: true
+          schema:
+            type: string
+        - name: fields
+          description: list of comma separated fields to return
+          in: query
+          schema:
+            type: string
+      responses:
+        default:
+          description: getByTranslation default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestCountries'
+  /v3.1/independent:
+    get:
+      operationId: getIndependentCountries
+      parameters:
+        - name: status
+          in: query
+          required: true
+          schema:
+            type: boolean
+        - name: fields
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: getIndependentCountries default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RestCountries'
+components:
+  schemas:
+    RestCountries:
+      type: array
+      items:
+        $ref: '#/components/schemas/RestCountry'
+    RestCountry:
+      type: object
