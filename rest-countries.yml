@@ -3,12 +3,8 @@ servers:
   - url: https://restcountries.com
 info:
   title: rest-countries
-<<<<<<< HEAD
   description: |
     Get information about countries via a RESTful API. Available fields that are returned include are listed below. If using multiple fields, pass as comma-separated string in the fields , for example name,status,continents <br><br>
-=======
-  description: Get information about countries via a RESTful API. Available fields include are listed below. If using multiple fields, pass as comma-separated string, for example name,status,continents <br><br>
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
     1. name
     2. tld
     3. cca2
@@ -55,10 +51,7 @@ paths:
   /v3.1/all:
     get:
       operationId: getAllCountries
-<<<<<<< HEAD
       summary:  "Get a list of all the countries and their details. This includes all fields like population, timezones, currency, continents and others." 
-=======
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
       parameters:
         - name: fields
           in: query
@@ -75,27 +68,18 @@ paths:
   /v3.1/alpha/{alphacode}:
     get:
       operationId: getByAlpha
-<<<<<<< HEAD
+
       summary:  "Search by cca2, ccn3, cca3 or cioc country code"
-=======
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
       parameters:
         - name: alphacode
           in: path
           required: true
-<<<<<<< HEAD
           description: "cca2, ccn3, cca3 or cioc country code" 
-=======
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           schema:
             type: string
         - name: fields
           in: query
-<<<<<<< HEAD
           description: list of comma separated fields to return
-=======
-          required: true
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           schema:
             type: string
       responses:
@@ -112,19 +96,12 @@ paths:
         - name: codes
           in: query
           required: true
-<<<<<<< HEAD
           description: list of comma separated cca2, ccn3, cca3 or cioc country code 
-=======
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           schema:
             type: string
         - name: fields
           in: query
-<<<<<<< HEAD
           description: list of comma separated fields to return
-=======
-          required: true
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           schema:
             type: string
       responses:
@@ -137,26 +114,17 @@ paths:
   /v3.1/currency/{currency}:
     get:
       operationId: getByCurrency
-<<<<<<< HEAD
       summary:  Find a country/countries using its/their currency code e.g usd, gbp
-=======
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
       parameters:
         - name: currency
           in: path
           required: true
           schema:
             type: string
-<<<<<<< HEAD
           description:  Currency code
         - name: fields
           in: query
           description: list of comma separated fields to return
-=======
-        - name: fields
-          in: query
-          required: true
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           schema:
             type: string
       responses:
@@ -169,37 +137,22 @@ paths:
   /v3.1/name/{name}:
     get:
       operationId: getByName
-<<<<<<< HEAD
       summary: Get a country by its name
-=======
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
       parameters:
         - name: name
           in: path
           required: true
-<<<<<<< HEAD
           description: Name of the country
-=======
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           schema:
             type: string
         - name: fullText
           in: query
-<<<<<<< HEAD
-      
           description: Indicates if the name should be matched fully by text or to be searched. Set true to match the name exactly and false for search. 
-=======
-          required: true
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           schema:
             type: boolean
         - name: fields
           in: query
-<<<<<<< HEAD
           description: list of comma separated fields to return
-=======
-          required: true
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           schema:
             type: string
       responses:
@@ -212,10 +165,7 @@ paths:
   /v3.1/capital/{capital}:
     get:
       operationId: getByCapital
-<<<<<<< HEAD
       summary: Get a country from its capital city/state
-=======
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
       parameters:
         - name: capital
           in: path
@@ -223,13 +173,8 @@ paths:
           schema:
             type: string
         - name: fields
-<<<<<<< HEAD
           description: list of comma separated fields to return
           in: query
-=======
-          in: query
-          required: true
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           schema:
             type: string
       responses:
@@ -242,27 +187,17 @@ paths:
   /v3.1/region/{region}:
     get:
       operationId: getByContinent
-<<<<<<< HEAD
       summary: Get countries in a specific continent
-=======
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
       parameters:
         - name: region
           in: path
           required: true
-<<<<<<< HEAD
           description: Continent name 
-=======
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           schema:
             type: string
         - name: fields
           in: query
-<<<<<<< HEAD
           description: list of comma separated fields to return
-=======
-          required: true
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           schema:
             type: string
       responses:
@@ -275,27 +210,17 @@ paths:
   /v3.1/subregion/{subregion}:
     get:
       operationId: getBySubRegion
-<<<<<<< HEAD
       summary: Get countries in a subregion e.g Nothern Europe 
       parameters:
         - name: subregion
           description: The name of the subregion
-=======
-      parameters:
-        - name: subregion
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           in: path
           required: true
           schema:
             type: string
         - name: fields
-<<<<<<< HEAD
           description: list of comma separated fields to return
           in: query
-=======
-          in: query
-          required: true
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           schema:
             type: string
       responses:
@@ -308,27 +233,17 @@ paths:
   /v3.1/lang/{lang}:
     get:
       operationId: getByLanguage
-<<<<<<< HEAD
       summary: Get a list of countries by language
       parameters:
         - name: lang
           description: the language e.g. spanish
-=======
-      parameters:
-        - name: lang
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           in: path
           required: true
           schema:
             type: string
         - name: fields
-<<<<<<< HEAD
           description: list of comma separated fields to return
           in: query
-=======
-          in: query
-          required: true
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           schema:
             type: string
       responses:
@@ -341,28 +256,17 @@ paths:
   /v3.1/demonym/{demonym}:
     get:
       operationId: getByDemonym
-<<<<<<< HEAD
       summary:  Get country from demonym e.g. american
       parameters:
         - name: demonym
           in: path
           description: Demonym e.g. canadian, american 
-=======
-      parameters:
-        - name: demonym
-          in: path
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           required: true
           schema:
             type: string
         - name: fields
-<<<<<<< HEAD
           description: list of comma separated fields to return
           in: query
-=======
-          in: query
-          required: true
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           schema:
             type: string
       responses:
@@ -375,28 +279,17 @@ paths:
   /v3.1/translation/{translation}:
     get:
       operationId: getByTranslation
-<<<<<<< HEAD
       summary : Get a country by its translated name e.g.  alemania for germany
       parameters:
         - name: translation
           in: path
           description: Country name in a different language e.g. alemania
-=======
-      parameters:
-        - name: translation
-          in: path
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           required: true
           schema:
             type: string
         - name: fields
-<<<<<<< HEAD
           description: list of comma separated fields to return
           in: query
-=======
-          in: query
-          required: true
->>>>>>> 004e2c049608d9caaeae82501bdfdbbaa7082a62
           schema:
             type: string
       responses:
