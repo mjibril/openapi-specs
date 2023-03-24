@@ -1,1018 +1,209 @@
-openapi: 3.0.3
-info:
-  title: Launch Library
-  version: v2.2.0
-  description: ""
-  contact:
-    name: The Space Devs
-    email: support@thespacedevs.com
-  license:
-    name: Apache License 2.0
-servers:
-  - url: https://lldev.thespacedevs.com
-paths:
-  /2.2.0/agencies/:
-    get:
-      operationId: agencies_list
-      description:  Space Agencies 
-      parameters:
-   
-      - in: query
-        name: abbrev__contains
-        schema:
-          type: string
-     
-      - in: query
-        name: administrator__contains
-        schema:
-          type: string
-      - in: query
-        name: agency_type
-        schema:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-   
-     
-      - in: query
-        name: attempted_landings__gte
-        schema:
-          type: integer
-     
-      - in: query
-        name: attempted_landings__lte
-        schema:
-          type: integer
-       
-   
-    
-  
-      - in: query
-        name: description__contains
-        schema:
-          type: string
- 
-  
-      - in: query
-        name: failed_landings__gte
-        schema:
-          type: integer
-   
-      - in: query
-        name: failed_landings__lte
-        schema:
-          type: integer
-  
-    
-      - in: query
-        name: failed_launches__gte
-        schema:
-          type: integer
-    
-      - in: query
-        name: failed_launches__lte
-        schema:
-          type: integer
-      - in: query
-        name: featured
-        schema:
-          type: boolean
-  
-   
-      - in: query
-        name: id
-        schema:
-          type: integer
-      - name: limit
-        required: false
-        in: query
-        description: Limit
-        schema:
-          type: integer
-
-      - in: query
-        name: name__contains
-        schema:
-          type: string
-      - name: offset
-        required: false
-        in: query
-        description: Offset
-        schema:
-          type: integer
-      - name: ordering
-        required: false
-        in: query
-        description: Ordering field
-        schema:
-          type: string
-      - in: query
-        name: parent
-        schema:
-          type: integer
-  
-   
-  
-      - name: search
-        required: false
-        in: query
-        description: search term.
-        schema:
-          type: string
-    
-    
-      - in: query
-        name: successful_landings__gte
-        schema:
-          type: integer
-    
-      - in: query
-        name: successful_landings__lte
-        schema:
-          type: integer
-     
-   
-      - in: query
-        name: successful_launches__gte
-        schema:
-          type: integer
-   
-      - in: query
-        name: successful_launches__lte
-        schema:
-          type: integer
-  
-      - in: query
-        name: total_launch_count__gte
-        schema:
-          type: integer
-  
-      - in: query
-        name: total_launch_count__lte
-        schema:
-          type: integer
-      tags:
-      - agencies
-      security:
-      - tokenAuth: []
-      - cookieAuth: []
-      - basicAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedAgencyList'
-          description: ''
-  /2.2.0/agencies/{id}/:
-    get:
-      operationId: agencies_retrieve
-      description: Single Agencies 
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: Agency Id
-        required: true
-      tags:
-      - agencies
-      security:
-      - tokenAuth: []
-      - cookieAuth: []
-      - basicAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AgencySerializerDetailed'
-          description: ''
-  /2.2.0/astronaut/:
-    get:
-      operationId: astronaut_list
-      description: Astronaut List
-
-      parameters:
-     
-    
-      - in: query
-        name: age__gte
-        schema:
-          type: integer
-    
-      - in: query
-        name: age__lte
-        schema:
-          type: integer
-     
-   
-      - in: query
-        name: date_of_birth__gte
-        schema:
-          type: string
-          format: date
-     
-      - in: query
-        name: date_of_birth__lte
-        schema:
-          type: string
-          format: date
-  
-   
-      - in: query
-        name: date_of_death__gte
-        schema:
-          type: string
-          format: date
-    
-      - in: query
-        name: date_of_death__lte
-        schema:
-          type: string
-          format: date
-   
-   
-      - in: query
-        name: flights_count__gte
-        schema:
-          type: integer
-  
-      - in: query
-        name: flights_count__lte
-        schema:
-          type: integer
-
-      - in: query
-        name: landings_count__gte
-        schema:
-          type: integer
-  
-      - in: query
-        name: landings_count__lte
-        schema:
-          type: integer
-      - name: limit
-        required: false
-        in: query
-        description: limit results
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: offset
-        schema:
-          type: integer
-      - name: ordering
-        required: false
-        in: query
-        description: field to order
-        schema:
-          type: string
-      - name: search
-        required: false
-        in: query
-        description: search term.
-        schema:
-          type: string
-      - in: query
-        name: type__id
-        schema:
-          type: integer
-      tags:
-      - astronaut
-      security:
-      - tokenAuth: []
-      - cookieAuth: []
-      - basicAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedAstronautNormalList'
-          description: ''
-  /2.2.0/astronaut/{id}/:
-    get:
-      operationId: astronaut_retrieve
-      description: Single Astronaut
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: Astronuat Id
-        required: true
-      tags:
-      - astronaut
-      security:
-      - tokenAuth: []
-      - cookieAuth: []
-      - basicAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AstronautDetailed'
-          description: ''
-  
-  
-  
-  /2.2.0/dashboard/starship/:
-    get:
-      operationId: dashboard_starship_retrieve
-      description: SpaceX Starship Dashboard
-      tags:
-      - dashboard
-      security:
-      - tokenAuth: []
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '200':
-          description: No response body
-  /2.2.0/event/:
-    get:
-      operationId: event_list
-      description: Events list
-      parameters:
-      - in: query
-        name: id
-        schema:
-          type: integer
-      - name: limit
-        required: false
-        in: query
-        description: Limit results
-        schema:
-          type: integer
-      - name: offset
-        required: false
-        in: query
-        description: offset 
-        schema:
-          type: integer
-      - in: query
-        name: program
-        schema:
-          type: array
-          items:
-            type: integer
-        explode: true
-        style: form
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
-      - in: query
-        name: slug
-        schema:
-          type: string
-      - in: query
-        name: type
-        schema:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-      tags:
-      - event
-      security:
-      - tokenAuth: []
-      - cookieAuth: []
-      - basicAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedEventsList'
-          description: ''
-  /2.2.0/event/{id}/:
-    get:
-      operationId: event_retrieve
-      description:  Single event
-
-       
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: Event Id
-        required: true
-      tags:
-      - event
-      security:
-      - tokenAuth: []
-      - cookieAuth: []
-      - basicAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Events'
-          description: ''
-  
-  
-  
-  /2.2.0/launch/:
-    get:
-      operationId: launch_list
-      description: Launch List
-      parameters:
-     
-     
-    
-      - in: query
-        name: last_updated__gte
-        schema:
-          type: string
-          format: date-time
-        description: Last Update is greater than or equal to
-      - in: query
-        name: last_updated__lte
-        schema:
-          type: string
-          format: date-time
-        description: Last Update is less than or equal to
-      - name: limit
-        required: false
-        in: query
-        description: Number of results to return per page.
-        schema:
-          type: integer
-     
-      
-      - in: query
-        name: location_launch_attempt_count__gte
-        schema:
-          type: integer
-     
-      - in: query
-        name: location_launch_attempt_count__lte
-        schema:
-          type: integer
-      
-     
-      - in: query
-        name: location_launch_attempt_count_year__gte
-        schema:
-          type: integer
-      
-      - in: query
-        name: location_launch_attempt_count_year__lte
-        schema:
-          type: integer
-      
-      - in: query
-        name: mission__orbit__name__icontains
-        schema:
-          type: string
-      - in: query
-        name: name
-        schema:
-          type: string
-      
-     
-      - name: offset
-        required: false
-        in: query
-        description: offset
-        schema:
-          type: integer
-     
-      - in: query
-        name: orbital_launch_attempt_count__gte
-        schema:
-          type: integer
-      
-      - in: query
-        name: orbital_launch_attempt_count__lte
-        schema:
-          type: integer
-     
-      - in: query
-        name: orbital_launch_attempt_count_year__gte
-        schema:
-          type: integer
-     
-      - in: query
-        name: orbital_launch_attempt_count_year__lte
-        schema:
-          type: integer
-      - name: ordering
-        required: false
-        in: query
-        description: Which field to use when ordering the results.
-        schema:
-          type: string
-  
-      - name: search
-        required: false
-        in: query
-        description: A search term.
-        schema:
-          type: string
-      - in: query
-        name: slug
-        schema:
-          type: string
-      - in: query
-        name: status
-        schema:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-   
-      - in: query
-        name: window_end__gte
-        schema:
-          type: string
-          format: date-time
-        description: Window End is greater than or equal to
-      - in: query
-        name: window_end__lte
-        schema:
-          type: string
-          format: date-time
-        description: Window End is less than or equal to
-     
-      - in: query
-        name: window_start__gte
-        schema:
-          type: string
-          format: date-time
-        description: Window Start is greater than or equal to
-
-      - in: query
-        name: window_start__lte
-        schema:
-          type: string
-          format: date-time
-        description: Window Start is less than or equal to
-      tags:
-      - launch
-      security:
-      - tokenAuth: []
-      - cookieAuth: []
-      - basicAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedLaunchSerializerCommonList'
-          description: ''
-  /2.2.0/launch/{id}/:
-    get:
-      operationId: launch_retrieve
-      description: Single launch
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: string
-          format: uuid
-        description: Launch ID
-        required: true
-      tags:
-      - launch
-      security:
-      - tokenAuth: []
-      - cookieAuth: []
-      - basicAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LaunchDetailed'
-          description: ''
-  
-  /2.2.0/location/:
-    get:
-      operationId: location_list
-      description: Locations List
-
-      parameters:
-    
-      - in: query
-        name: country_code__contains
-        schema:
-          type: string
-      - in: query
-        name: id
-        schema:
-          type: integer
-    
-      - name: limit
-        required: false
-        in: query
-        description: limiy
-        schema:
-          type: integer
-      - in: query
-        name: name
-        schema:
-          type: string
-      - in: query
-        name: name__contains
-        schema:
-          type: string
-      - name: offset
-        required: false
-        in: query
-        description: offset
-        schema:
-          type: integer
-      - name: search
-        required: false
-        in: query
-        description: search term.
-        schema:
-          type: string
-   
-   
-      - in: query
-        name: total_landing_count__gte
-        schema:
-          type: integer
-   
-      - in: query
-        name: total_landing_count__lte
-        schema:
-          type: integer
-    
- 
-      - in: query
-        name: total_launch_count__gte
-        schema:
-          type: integer
-     
-      - in: query
-        name: total_launch_count__lte
-        schema:
-          type: integer
-      tags:
-      - location
-      security:
-      - tokenAuth: []
-      - cookieAuth: []
-      - basicAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedLocationList'
-          description: ''
-  /2.2.0/location/{id}/:
-    get:
-      operationId: location_retrieve
-      description: Location Id
-
-       
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: 
-        required: true
-      tags:
-      - location
-      security:
-      - tokenAuth: []
-      - cookieAuth: []
-      - basicAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/LocationDetail'
-          description: ''
- 
-    
-  
-  
-    
-  /2.2.0/spacestation/:
-    get:
-      operationId: spacestation_list
-      description: Spacestation List
-
-
-      parameters:
-      
-      - in: query
-        name: id
-        schema:
-          type: integer
-      - name: limit
-        required: false
-        in: query
-        description: Limit results
-        schema:
-          type: integer
-      - in: query
-        name: name
-        schema:
-          type: string
-      - in: query
-        name: name__contains
-        schema:
-          type: string
-      - name: offset
-        required: false
-        in: query
-        description: Offset
-        schema:
-          type: integer
-    
-    
-      - in: query
-        name: onboard_crew__gte
-        schema:
-          type: integer
-    
-          type: integer
-      - in: query
-        name: onboard_crew__lte
-        schema:
-          type: integer
-
-      - name: ordering
-        required: false
-        in: query
-        description: Ordering field
-        schema:
-          type: string
-
-      - name: search
-        required: false
-        in: query
-        description: search term.
-        schema:
-          type: string
-   
-      - in: query
-        name: type
-        schema:
-          type: integer
-      tags:
-      - spacestation
-      security:
-      - tokenAuth: []
-      - cookieAuth: []
-      - basicAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/PaginatedSpaceStationList'
-          description: ''
-  /2.2.0/spacestation/{id}/:
-    get:
-      operationId: spacestation_retrieve
-      description: Spacestations List
-
-  
-      parameters:
-      - in: path
-        name: id
-        schema:
-          type: integer
-        description: Spacestation Id
-        required: true
-      tags:
-      - spacestation
-      security:
-      - tokenAuth: []
-      - cookieAuth: []
-      - basicAuth: []
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SpaceStationDetailed'
-          description: ''
-  
 components:
   schemas:
     Agency:
-      type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
+        abbrev:
+          maxLength: 255
           type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
+        administrator:
           maxLength: 200
+          nullable: true
+          type: string
+        country_code:
+          maxLength: 1048
+          type: string
+        description:
+          maxLength: 2048
+          nullable: true
+          type: string
         featured:
           type: boolean
-        type:
-          type: string
-          nullable: true
-          maxLength: 255
-        country_code:
-          type: string
-          maxLength: 1048
-        abbrev:
-          type: string
-          maxLength: 255
-        description:
-          type: string
-          nullable: true
-          maxLength: 2048
-        administrator:
-          type: string
-          nullable: true
-          maxLength: 200
         founding_year:
-          type: string
-          nullable: true
           maxLength: 20
-        launchers:
+          nullable: true
           type: string
-          maxLength: 500
-        spacecraft:
-          type: string
-          maxLength: 500
-        parent:
-          type: string
+        id:
           readOnly: true
+          type: integer
         image_url:
-          type: string
           format: uri
           nullable: true
+          type: string
+        launchers:
+          maxLength: 500
+          type: string
         logo_url:
-          type: string
           format: uri
           nullable: true
+          type: string
+        name:
+          maxLength: 200
+          type: string
+        parent:
+          readOnly: true
+          type: string
+        spacecraft:
+          maxLength: 500
+          type: string
+        type:
+          maxLength: 255
+          nullable: true
+          type: string
+        url:
+          format: uri
+          readOnly: true
+          type: string
       required:
       - id
       - name
       - parent
       - url
-    AgencyList:
       type: object
+    AgencyList:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
+        abbrev:
+          maxLength: 255
           type: string
+        id:
+          readOnly: true
+          type: integer
+        name:
+          maxLength: 200
+          type: string
+        url:
           format: uri
           readOnly: true
-        name:
           type: string
-          maxLength: 200
-        abbrev:
-          type: string
-          maxLength: 255
       required:
       - id
       - name
       - url
-    AgencySerializerDetailed:
       type: object
+    AgencySerializerDetailed:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
+        abbrev:
+          maxLength: 255
           type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
+        administrator:
           maxLength: 200
+          nullable: true
+          type: string
+        attempted_landings:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        consecutive_successful_landings:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        consecutive_successful_launches:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        country_code:
+          maxLength: 1048
+          type: string
+        description:
+          maxLength: 2048
+          nullable: true
+          type: string
+        failed_landings:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        failed_launches:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
         featured:
           type: boolean
-        type:
-          type: string
-          nullable: true
-          maxLength: 255
-        country_code:
-          type: string
-          maxLength: 1048
-        abbrev:
-          type: string
-          maxLength: 255
-        description:
-          type: string
-          nullable: true
-          maxLength: 2048
-        administrator:
-          type: string
-          nullable: true
-          maxLength: 200
         founding_year:
-          type: string
-          nullable: true
           maxLength: 20
-        launchers:
+          nullable: true
           type: string
-          maxLength: 500
-        spacecraft:
-          type: string
-          maxLength: 500
-        parent:
-          type: string
+        id:
           readOnly: true
-        launch_library_url:
-          type: string
-          readOnly: true
-        total_launch_count:
           type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        successful_launches:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        consecutive_successful_launches:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        failed_launches:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        pending_launches:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        successful_landings:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        failed_landings:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        attempted_landings:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        consecutive_successful_landings:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        info_url:
-          type: string
-          format: uri
-          nullable: true
-          maxLength: 200
-        wiki_url:
-          type: string
-          format: uri
-          nullable: true
-          maxLength: 200
-        logo_url:
-          type: string
-          format: uri
-          nullable: true
         image_url:
-          type: string
           format: uri
           nullable: true
-        nation_url:
           type: string
+        info_url:
           format: uri
+          maxLength: 200
           nullable: true
+          type: string
+        launch_library_url:
+          readOnly: true
+          type: string
         launcher_list:
-          type: array
           items:
             $ref: '#/components/schemas/LauncherConfigDetailSerializerForAgency'
           readOnly: true
-        spacecraft_list:
           type: array
+        launchers:
+          maxLength: 500
+          type: string
+        logo_url:
+          format: uri
+          nullable: true
+          type: string
+        name:
+          maxLength: 200
+          type: string
+        nation_url:
+          format: uri
+          nullable: true
+          type: string
+        parent:
+          readOnly: true
+          type: string
+        pending_launches:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        spacecraft:
+          maxLength: 500
+          type: string
+        spacecraft_list:
           items:
             $ref: '#/components/schemas/SpacecraftConfigurationDetail'
           readOnly: true
+          type: array
+        successful_landings:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        successful_launches:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        total_launch_count:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        type:
+          maxLength: 255
+          nullable: true
+          type: string
+        url:
+          format: uri
+          readOnly: true
+          type: string
+        wiki_url:
+          format: uri
+          maxLength: 200
+          nullable: true
+          type: string
       required:
       - id
       - launch_library_url
@@ -1021,284 +212,272 @@ components:
       - parent
       - spacecraft_list
       - url
-    AgencySerializerDetailedCommon:
       type: object
+    AgencySerializerDetailedCommon:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
+        abbrev:
+          maxLength: 255
           type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
+        administrator:
           maxLength: 200
+          nullable: true
+          type: string
+        attempted_landings:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        consecutive_successful_landings:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        consecutive_successful_launches:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        country_code:
+          maxLength: 1048
+          type: string
+        description:
+          maxLength: 2048
+          nullable: true
+          type: string
+        failed_landings:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        failed_launches:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
         featured:
           type: boolean
-        type:
-          type: string
-          nullable: true
-          maxLength: 255
-        country_code:
-          type: string
-          maxLength: 1048
-        abbrev:
-          type: string
-          maxLength: 255
-        description:
-          type: string
-          nullable: true
-          maxLength: 2048
-        administrator:
-          type: string
-          nullable: true
-          maxLength: 200
         founding_year:
-          type: string
-          nullable: true
           maxLength: 20
-        launchers:
+          nullable: true
           type: string
-          maxLength: 500
-        spacecraft:
-          type: string
-          maxLength: 500
-        launch_library_url:
-          type: string
+        id:
           readOnly: true
-        total_launch_count:
           type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        consecutive_successful_launches:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        successful_launches:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        failed_launches:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        pending_launches:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        consecutive_successful_landings:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        successful_landings:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        failed_landings:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        attempted_landings:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        info_url:
-          type: string
-          format: uri
-          nullable: true
-          maxLength: 200
-        wiki_url:
-          type: string
-          format: uri
-          nullable: true
-          maxLength: 200
-        logo_url:
-          type: string
-          format: uri
-          nullable: true
         image_url:
-          type: string
           format: uri
           nullable: true
+          type: string
+        info_url:
+          format: uri
+          maxLength: 200
+          nullable: true
+          type: string
+        launch_library_url:
+          readOnly: true
+          type: string
+        launchers:
+          maxLength: 500
+          type: string
+        logo_url:
+          format: uri
+          nullable: true
+          type: string
+        name:
+          maxLength: 200
+          type: string
         nation_url:
-          type: string
           format: uri
           nullable: true
+          type: string
+        pending_launches:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        spacecraft:
+          maxLength: 500
+          type: string
+        successful_landings:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        successful_launches:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        total_launch_count:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        type:
+          maxLength: 255
+          nullable: true
+          type: string
+        url:
+          format: uri
+          readOnly: true
+          type: string
+        wiki_url:
+          format: uri
+          maxLength: 200
+          nullable: true
+          type: string
       required:
       - id
       - launch_library_url
       - name
       - url
-    AgencySerializerMini:
       type: object
+    AgencySerializerMini:
       properties:
         id:
-          type: integer
           readOnly: true
-        url:
+          type: integer
+        name:
+          maxLength: 200
           type: string
+        type:
+          maxLength: 255
+          nullable: true
+          type: string
+        url:
           format: uri
           readOnly: true
-        name:
           type: string
-          maxLength: 200
-        type:
-          type: string
-          nullable: true
-          maxLength: 255
       required:
       - id
       - name
       - url
-    AgencyType:
       type: object
-      properties:
-        id:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-        name:
-          type: string
-          maxLength: 255
-      required:
-      - id
     Astronaut:
-      type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
-        status:
-          allOf:
-          - $ref: '#/components/schemas/AstronautStatus'
-          readOnly: true
         agency:
           allOf:
           - $ref: '#/components/schemas/AgencySerializerMini'
           readOnly: true
+        id:
+          readOnly: true
+          type: integer
+        name:
+          maxLength: 255
+          type: string
         profile_image:
-          type: string
           format: uri
           nullable: true
+          type: string
         profile_image_thumbnail:
-          type: string
           format: uri
           nullable: true
+          type: string
+        status:
+          allOf:
+          - $ref: '#/components/schemas/AstronautStatus'
+          readOnly: true
+        url:
+          format: uri
+          readOnly: true
+          type: string
       required:
       - agency
       - id
       - name
       - status
       - url
-    AstronautDetailed:
       type: object
+    AstronautDetailed:
       properties:
-        id:
+        age:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
           type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
-        status:
-          allOf:
-          - $ref: '#/components/schemas/AstronautStatus'
-          readOnly: true
-        type:
-          allOf:
-          - $ref: '#/components/schemas/AstronautType'
-          readOnly: true
         agency:
           allOf:
           - $ref: '#/components/schemas/AgencySerializerMini'
           readOnly: true
-        age:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        date_of_birth:
-          type: string
-          format: date
-          nullable: true
-        date_of_death:
-          type: string
-          format: date
-          nullable: true
-        nationality:
-          type: string
-          maxLength: 255
-        twitter:
-          type: string
-          nullable: true
-          maxLength: 255
-        instagram:
-          type: string
-          nullable: true
-          maxLength: 255
         bio:
-          type: string
           maxLength: 2048
-        profile_image:
           type: string
-          format: uri
+        date_of_birth:
+          format: date
           nullable: true
-        profile_image_thumbnail:
           type: string
-          format: uri
+        date_of_death:
+          format: date
           nullable: true
-        wiki:
           type: string
+        first_flight:
+          format: date-time
           nullable: true
-          maxLength: 255
+          type: string
         flights:
-          type: array
           items:
             $ref: '#/components/schemas/LaunchSerializerCommon'
           readOnly: true
-        landings:
           type: array
+        flights_count:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        id:
+          readOnly: true
+          type: integer
+        instagram:
+          maxLength: 255
+          nullable: true
+          type: string
+        landings:
           items:
             $ref: '#/components/schemas/SpacecraftFlight'
           readOnly: true
-        flights_count:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
+          type: array
         landings_count:
-          type: integer
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
+          type: integer
         last_flight:
-          type: string
           format: date-time
           nullable: true
-        first_flight:
           type: string
-          format: date-time
+        name:
+          maxLength: 255
+          type: string
+        nationality:
+          maxLength: 255
+          type: string
+        profile_image:
+          format: uri
           nullable: true
+          type: string
+        profile_image_thumbnail:
+          format: uri
+          nullable: true
+          type: string
+        status:
+          allOf:
+          - $ref: '#/components/schemas/AstronautStatus'
+          readOnly: true
+        twitter:
+          maxLength: 255
+          nullable: true
+          type: string
+        type:
+          allOf:
+          - $ref: '#/components/schemas/AstronautType'
+          readOnly: true
+        url:
+          format: uri
+          readOnly: true
+          type: string
+        wiki:
+          maxLength: 255
+          nullable: true
+          type: string
       required:
       - agency
       - bio
@@ -1310,196 +489,69 @@ components:
       - status
       - type
       - url
-    AstronautDetailedSerializerNoFlights:
       type: object
+    AstronautDetailedSerializerNoFlights:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
-        type:
-          allOf:
-          - $ref: '#/components/schemas/AstronautType'
-          readOnly: true
-        status:
-          allOf:
-          - $ref: '#/components/schemas/AstronautStatus'
-          readOnly: true
         agency:
           allOf:
           - $ref: '#/components/schemas/AgencySerializerMini'
           readOnly: true
-        date_of_birth:
-          type: string
-          format: date
-          nullable: true
-        date_of_death:
-          type: string
-          format: date
-          nullable: true
-        nationality:
-          type: string
-          maxLength: 255
-        twitter:
-          type: string
-          nullable: true
-          maxLength: 255
-        instagram:
-          type: string
-          nullable: true
-          maxLength: 255
         bio:
-          type: string
           maxLength: 2048
-        profile_image:
           type: string
-          format: uri
+        date_of_birth:
+          format: date
           nullable: true
-        wiki:
           type: string
+        date_of_death:
+          format: date
           nullable: true
-          maxLength: 255
-        last_flight:
           type: string
-          format: date-time
-          nullable: true
         first_flight:
-          type: string
           format: date-time
           nullable: true
-      required:
-      - agency
-      - bio
-      - id
-      - name
-      - nationality
-      - status
-      - type
-      - url
-    AstronautFlight:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        role:
-          allOf:
-          - $ref: '#/components/schemas/AstronautRole'
-          readOnly: true
-        astronaut:
-          allOf:
-          - $ref: '#/components/schemas/AstronautDetailedSerializerNoFlights'
-          readOnly: true
-      required:
-      - astronaut
-      - id
-      - role
-    AstronautFlightForExpedition:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        role:
-          allOf:
-          - $ref: '#/components/schemas/AstronautRole'
-          readOnly: true
-        astronaut:
-          allOf:
-          - $ref: '#/components/schemas/Astronaut'
-          readOnly: true
-      required:
-      - astronaut
-      - id
-      - role
-    AstronautNormal:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
           type: string
-          format: uri
+        id:
           readOnly: true
-        name:
-          type: string
+          type: integer
+        instagram:
           maxLength: 255
+          nullable: true
+          type: string
+        last_flight:
+          format: date-time
+          nullable: true
+          type: string
+        name:
+          maxLength: 255
+          type: string
+        nationality:
+          maxLength: 255
+          type: string
+        profile_image:
+          format: uri
+          nullable: true
+          type: string
         status:
           allOf:
           - $ref: '#/components/schemas/AstronautStatus'
           readOnly: true
+        twitter:
+          maxLength: 255
+          nullable: true
+          type: string
         type:
           allOf:
           - $ref: '#/components/schemas/AstronautType'
           readOnly: true
-        age:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        date_of_birth:
-          type: string
-          format: date
-          nullable: true
-        date_of_death:
-          type: string
-          format: date
-          nullable: true
-        nationality:
-          type: string
-          maxLength: 255
-        bio:
-          type: string
-          maxLength: 2048
-        twitter:
-          type: string
-          nullable: true
-          maxLength: 255
-        instagram:
-          type: string
-          nullable: true
-          maxLength: 255
-        wiki:
-          type: string
-          nullable: true
-          maxLength: 255
-        agency:
-          allOf:
-          - $ref: '#/components/schemas/Agency'
+        url:
+          format: uri
           readOnly: true
-        profile_image:
           type: string
-          format: uri
+        wiki:
+          maxLength: 255
           nullable: true
-        profile_image_thumbnail:
           type: string
-          format: uri
-          nullable: true
-        flights_count:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        landings_count:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        last_flight:
-          type: string
-          format: date-time
-          nullable: true
-        first_flight:
-          type: string
-          format: date-time
-          nullable: true
       required:
       - agency
       - bio
@@ -1509,176 +561,230 @@ components:
       - status
       - type
       - url
-    AstronautRole:
       type: object
+    AstronautFlight:
       properties:
-        id:
-          type: integer
+        astronaut:
+          allOf:
+          - $ref: '#/components/schemas/AstronautDetailedSerializerNoFlights'
           readOnly: true
-        role:
-          type: string
-          maxLength: 255
-        priority:
+        id:
+          readOnly: true
           type: integer
+        role:
+          allOf:
+          - $ref: '#/components/schemas/AstronautRole'
+          readOnly: true
+      required:
+      - astronaut
+      - id
+      - role
+      type: object
+    AstronautFlightForExpedition:
+      properties:
+        astronaut:
+          allOf:
+          - $ref: '#/components/schemas/Astronaut'
+          readOnly: true
+        id:
+          readOnly: true
+          type: integer
+        role:
+          allOf:
+          - $ref: '#/components/schemas/AstronautRole'
+          readOnly: true
+      required:
+      - astronaut
+      - id
+      - role
+      type: object
+    AstronautNormal:
+      properties:
+        age:
           maximum: 2147483647
           minimum: -2147483648
+          nullable: true
+          type: integer
+        agency:
+          allOf:
+          - $ref: '#/components/schemas/Agency'
+          readOnly: true
+        bio:
+          maxLength: 2048
+          type: string
+        date_of_birth:
+          format: date
+          nullable: true
+          type: string
+        date_of_death:
+          format: date
+          nullable: true
+          type: string
+        first_flight:
+          format: date-time
+          nullable: true
+          type: string
+        flights_count:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        id:
+          readOnly: true
+          type: integer
+        instagram:
+          maxLength: 255
+          nullable: true
+          type: string
+        landings_count:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        last_flight:
+          format: date-time
+          nullable: true
+          type: string
+        name:
+          maxLength: 255
+          type: string
+        nationality:
+          maxLength: 255
+          type: string
+        profile_image:
+          format: uri
+          nullable: true
+          type: string
+        profile_image_thumbnail:
+          format: uri
+          nullable: true
+          type: string
+        status:
+          allOf:
+          - $ref: '#/components/schemas/AstronautStatus'
+          readOnly: true
+        twitter:
+          maxLength: 255
+          nullable: true
+          type: string
+        type:
+          allOf:
+          - $ref: '#/components/schemas/AstronautType'
+          readOnly: true
+        url:
+          format: uri
+          readOnly: true
+          type: string
+        wiki:
+          maxLength: 255
+          nullable: true
+          type: string
+      required:
+      - agency
+      - bio
+      - id
+      - name
+      - nationality
+      - status
+      - type
+      - url
+      type: object
+    AstronautRole:
+      properties:
+        id:
+          readOnly: true
+          type: integer
+        priority:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+        role:
+          maxLength: 255
+          type: string
       required:
       - id
       - role
+      type: object
     AstronautStatus:
-      type: object
       properties:
         id:
-          type: integer
           readOnly: true
+          type: integer
         name:
-          type: string
           maxLength: 255
+          type: string
       required:
       - id
       - name
+      type: object
     AstronautType:
-      type: object
       properties:
         id:
-          type: integer
           readOnly: true
+          type: integer
         name:
-          type: string
           maxLength: 255
+          type: string
       required:
       - id
       - name
-    DockingEvent:
       type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        launch_id:
-          type: string
-        docking:
-          type: string
-          format: date-time
-        departure:
-          type: string
-          format: date-time
-          nullable: true
-        flight_vehicle:
-          allOf:
-          - $ref: '#/components/schemas/SpacecraftFlightSerializerForDockingEvent'
-          readOnly: true
-        docking_location:
-          allOf:
-          - $ref: '#/components/schemas/DockingLocation'
-          readOnly: true
-      required:
-      - docking
-      - docking_location
-      - flight_vehicle
-      - id
-      - launch_id
-      - url
-    DockingEventDetailed:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        launch_id:
-          type: string
-        docking:
-          type: string
-          format: date-time
-        departure:
-          type: string
-          format: date-time
-          nullable: true
-        flight_vehicle:
-          allOf:
-          - $ref: '#/components/schemas/SpacecraftFlightSerializerForDockingEventDetailed'
-          readOnly: true
-        docking_location:
-          allOf:
-          - $ref: '#/components/schemas/DockingLocation'
-          readOnly: true
-        space_station:
-          allOf:
-          - $ref: '#/components/schemas/SpaceStationSerializerForDockingEvent'
-          readOnly: true
-      required:
-      - docking
-      - docking_location
-      - flight_vehicle
-      - id
-      - launch_id
-      - space_station
-      - url
     DockingEventDetailedSerializerForSpacestation:
-      type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        docking:
-          type: string
-          format: date-time
         departure:
-          type: string
           format: date-time
           nullable: true
+          type: string
+        docking:
+          format: date-time
+          type: string
         flight_vehicle:
           allOf:
           - $ref: '#/components/schemas/SpacecraftFlightForDockingEvent'
           readOnly: true
+        id:
+          readOnly: true
+          type: integer
+        url:
+          format: uri
+          readOnly: true
+          type: string
       required:
       - docking
       - flight_vehicle
       - id
       - url
-    DockingEventSerializerForSpacecraftFlight:
       type: object
+    DockingEventSerializerForSpacecraftFlight:
       properties:
-        spacestation:
-          allOf:
-          - $ref: '#/components/schemas/SpaceStationSerializerForCommon'
-          readOnly: true
-        docking:
-          type: string
-          format: date-time
         departure:
-          type: string
           format: date-time
           nullable: true
+          type: string
+        docking:
+          format: date-time
+          type: string
         docking_location:
           allOf:
           - $ref: '#/components/schemas/DockingLocation'
+          readOnly: true
+        spacestation:
+          allOf:
+          - $ref: '#/components/schemas/SpaceStationSerializerForCommon'
           readOnly: true
       required:
       - docking
       - docking_location
       - spacestation
-    DockingLocation:
       type: object
+    DockingLocation:
       properties:
         id:
-          type: integer
           readOnly: true
+          type: integer
         name:
-          type: string
           maxLength: 255
+          type: string
         spacestation:
           allOf:
           - $ref: '#/components/schemas/SpaceStationSerializerForDocking'
@@ -1687,103 +793,103 @@ components:
       - id
       - name
       - spacestation
-    DockingLocationSerializerForSpacestation:
       type: object
+    DockingLocationSerializerForSpacestation:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
         docked:
           allOf:
           - $ref: '#/components/schemas/DockingEventDetailedSerializerForSpacestation'
           readOnly: true
+        id:
+          readOnly: true
+          type: integer
+        name:
+          maxLength: 255
+          type: string
       required:
       - docked
       - id
       - name
-    EventType:
       type: object
+    EventType:
       properties:
         id:
-          type: integer
           maximum: 2147483647
           minimum: -2147483648
+          type: integer
         name:
-          type: string
           maxLength: 255
+          type: string
       required:
       - id
-    Events:
       type: object
+    Events:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
+        date:
+          format: date-time
+          nullable: true
           type: string
-          format: uri
-          readOnly: true
-        slug:
+        description:
+          maxLength: 2048
           type: string
-          pattern: ^[-a-zA-Z0-9_]+$
-        name:
-          type: string
-          maxLength: 200
-        updates:
-          type: array
+        expeditions:
           items:
-            $ref: '#/components/schemas/Update'
+            $ref: '#/components/schemas/Expedition'
+          type: array
+        feature_image:
+          format: uri
+          type: string
+        id:
           readOnly: true
+          type: integer
+        launches:
+          items:
+            $ref: '#/components/schemas/LaunchSerializerCommon'
+          type: array
+        location:
+          maxLength: 100
+          nullable: true
+          type: string
+        name:
+          maxLength: 200
+          type: string
+        news_url:
+          format: uri
+          maxLength: 250
+          nullable: true
+          type: string
+        program:
+          items:
+            $ref: '#/components/schemas/Program'
+          readOnly: true
+          type: array
+        slug:
+          pattern: ^[-a-zA-Z0-9_]+$
+          type: string
+        spacestations:
+          items:
+            $ref: '#/components/schemas/SpaceStationSerializerForCommon'
+          type: array
         type:
           allOf:
           - $ref: '#/components/schemas/EventType'
           readOnly: true
-        description:
+        updates:
+          items:
+            $ref: '#/components/schemas/Update'
+          readOnly: true
+          type: array
+        url:
+          format: uri
+          readOnly: true
           type: string
-          maxLength: 2048
+        video_url:
+          format: uri
+          maxLength: 250
+          nullable: true
+          type: string
         webcast_live:
           type: boolean
-        location:
-          type: string
-          nullable: true
-          maxLength: 100
-        news_url:
-          type: string
-          format: uri
-          nullable: true
-          maxLength: 250
-        video_url:
-          type: string
-          format: uri
-          nullable: true
-          maxLength: 250
-        feature_image:
-          type: string
-          format: uri
-        date:
-          type: string
-          format: date-time
-          nullable: true
-        launches:
-          type: array
-          items:
-            $ref: '#/components/schemas/LaunchSerializerCommon'
-        expeditions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Expedition'
-        spacestations:
-          type: array
-          items:
-            $ref: '#/components/schemas/SpaceStationSerializerForCommon'
-        program:
-          type: array
-          items:
-            $ref: '#/components/schemas/Program'
-          readOnly: true
       required:
       - expeditions
       - id
@@ -1795,239 +901,185 @@ components:
       - type
       - updates
       - url
-    Expedition:
       type: object
+    Expedition:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
-        start:
-          type: string
-          format: date-time
         end:
-          type: string
           format: date-time
           nullable: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        mission_patches:
+          items:
+            $ref: '#/components/schemas/MissionPatch'
+          readOnly: true
+          type: array
+        name:
+          maxLength: 255
+          type: string
         spacestation:
           allOf:
           - $ref: '#/components/schemas/SpaceStationSerializerForExpedition'
           readOnly: true
-        mission_patches:
-          type: array
-          items:
-            $ref: '#/components/schemas/MissionPatch'
-          readOnly: true
-      required:
-      - id
-      - mission_patches
-      - name
-      - spacestation
-      - start
-      - url
-    ExpeditionDetail:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
+        start:
+          format: date-time
           type: string
+        url:
           format: uri
           readOnly: true
-        name:
           type: string
-          maxLength: 255
-        start:
-          type: string
-          format: date-time
-        end:
-          type: string
-          format: date-time
-          nullable: true
-        spacestation:
-          allOf:
-          - $ref: '#/components/schemas/SpaceStationDetailedSerializerForExpedition'
-          readOnly: true
-        crew:
-          type: array
-          items:
-            $ref: '#/components/schemas/AstronautFlightForExpedition'
-          readOnly: true
-        mission_patches:
-          type: array
-          items:
-            $ref: '#/components/schemas/MissionPatch'
-          readOnly: true
       required:
-      - crew
       - id
       - mission_patches
       - name
       - spacestation
       - start
       - url
+      type: object
     ExpeditionDetailedSerializerForSpacestation:
-      type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
-        start:
-          type: string
-          format: date-time
-        end:
-          type: string
-          format: date-time
-          nullable: true
         crew:
-          type: array
           items:
             $ref: '#/components/schemas/AstronautFlightForExpedition'
           readOnly: true
+          type: array
+        end:
+          format: date-time
+          nullable: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        name:
+          maxLength: 255
+          type: string
+        start:
+          format: date-time
+          type: string
+        url:
+          format: uri
+          readOnly: true
+          type: string
       required:
       - crew
       - id
       - name
       - start
       - url
-    ExpeditionSerializerForSpacestation:
       type: object
+    ExpeditionSerializerForSpacestation:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
-        start:
-          type: string
-          format: date-time
         end:
-          type: string
           format: date-time
           nullable: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        name:
+          maxLength: 255
+          type: string
+        start:
+          format: date-time
+          type: string
+        url:
+          format: uri
+          readOnly: true
+          type: string
       required:
       - id
       - name
       - start
       - url
-    FirstStage:
       type: object
+    FirstStage:
       properties:
         id:
+          readOnly: true
           type: integer
-          readOnly: true
-        type:
-          type: string
-          readOnly: true
-        reused:
-          type: boolean
-          nullable: true
-        launcher_flight_number:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        launcher:
-          allOf:
-          - $ref: '#/components/schemas/LauncherDetailed'
-          readOnly: true
         landing:
           allOf:
           - $ref: '#/components/schemas/Landing'
           readOnly: true
-        previous_flight_date:
-          type: string
-          format: date-time
-          nullable: true
-        turn_around_time_days:
-          type: integer
+        launcher:
+          allOf:
+          - $ref: '#/components/schemas/LauncherDetailed'
+          readOnly: true
+        launcher_flight_number:
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
+          type: integer
         previous_flight:
           allOf:
           - $ref: '#/components/schemas/LaunchSerializerMini'
           readOnly: true
+        previous_flight_date:
+          format: date-time
+          nullable: true
+          type: string
+        reused:
+          nullable: true
+          type: boolean
+        turn_around_time_days:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        type:
+          readOnly: true
+          type: string
       required:
       - id
       - landing
       - launcher
       - previous_flight
       - type
-    FirstStageType:
       type: object
-      properties:
-        id:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-        name:
-          type: string
-          maxLength: 50
-      required:
-      - id
     InfoURL:
-      type: object
       properties:
+        description:
+          maxLength: 350
+          nullable: true
+          type: string
+        feature_image:
+          format: uri
+          maxLength: 200
+          nullable: true
+          type: string
         priority:
-          type: integer
           maximum: 2147483647
           minimum: -2147483648
+          type: integer
         title:
-          type: string
-          nullable: true
           maxLength: 200
-        description:
-          type: string
           nullable: true
-          maxLength: 350
-        feature_image:
           type: string
-          format: uri
-          nullable: true
-          maxLength: 200
         url:
-          type: string
           format: uri
+          type: string
       required:
       - url
-    Landing:
       type: object
+    Landing:
       properties:
-        id:
-          type: integer
-          readOnly: true
         attempt:
           type: boolean
-        success:
-          type: boolean
-          nullable: true
         description:
-          type: string
           maxLength: 2048
+          type: string
+        id:
+          readOnly: true
+          type: integer
         location:
           allOf:
           - $ref: '#/components/schemas/LandingLocation'
           readOnly: true
+        success:
+          nullable: true
+          type: boolean
         type:
           allOf:
           - $ref: '#/components/schemas/LandingType'
@@ -2036,196 +1088,196 @@ components:
       - id
       - location
       - type
-    LandingLocation:
       type: object
+    LandingLocation:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
         abbrev:
-          type: string
           maxLength: 255
-        description:
           type: string
-          nullable: true
+        description:
           maxLength: 2048
+          nullable: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
         location:
           $ref: '#/components/schemas/Location'
-        successful_landings:
+        name:
+          maxLength: 255
           type: string
+        successful_landings:
           readOnly: true
+          type: string
       required:
       - id
       - location
       - successful_landings
-    LandingType:
       type: object
+    LandingType:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
         abbrev:
-          type: string
           maxLength: 255
-        description:
           type: string
-          nullable: true
+        description:
           maxLength: 2048
+          nullable: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        name:
+          maxLength: 255
+          type: string
       required:
       - id
-    LaunchDetailed:
       type: object
+    LaunchDetailed:
       properties:
-        id:
+        agency_launch_attempt_count:
+          nullable: true
+          readOnly: true
+          type: integer
+        agency_launch_attempt_count_year:
+          nullable: true
+          readOnly: true
+          type: integer
+        failreason:
+          nullable: true
+          readOnly: true
           type: string
+        flightclub_url:
+          format: uri
+          nullable: true
+          readOnly: true
+          type: string
+        hashtag:
+          nullable: true
+          readOnly: true
+          type: string
+        holdreason:
+          nullable: true
+          readOnly: true
+          type: string
+        id:
           format: uuid
           readOnly: true
-        url:
           type: string
-          format: uri
+        image:
           readOnly: true
-        slug:
           type: string
-          pattern: ^[-a-zA-Z0-9_]+$
-        flightclub_url:
-          type: string
-          format: uri
-          readOnly: true
-          nullable: true
-        r_spacex_api_id:
-          type: string
-          readOnly: true
-          nullable: true
-        name:
-          type: string
-          readOnly: true
-        status:
-          allOf:
-          - $ref: '#/components/schemas/LaunchStatus'
-          readOnly: true
-        last_updated:
-          type: string
-          format: date-time
-          readOnly: true
-        updates:
-          type: array
+        infoURLs:
           items:
-            $ref: '#/components/schemas/Update'
+            $ref: '#/components/schemas/InfoURL'
           readOnly: true
-        net:
+          type: array
+        infographic:
+          readOnly: true
           type: string
+        last_updated:
           format: date-time
           readOnly: true
-          nullable: true
-        window_end:
           type: string
-          format: date-time
-          readOnly: true
-          nullable: true
-        window_start:
-          type: string
-          format: date-time
-          readOnly: true
-          nullable: true
-        probability:
-          type: integer
-          readOnly: true
-          nullable: true
-        holdreason:
-          type: string
-          readOnly: true
-          nullable: true
-        failreason:
-          type: string
-          readOnly: true
-          nullable: true
-        hashtag:
-          type: string
-          readOnly: true
-          nullable: true
         launch_service_provider:
           allOf:
           - $ref: '#/components/schemas/AgencySerializerDetailedCommon'
           readOnly: true
-        rocket:
-          allOf:
-          - $ref: '#/components/schemas/RocketDetailed'
+        location_launch_attempt_count:
+          nullable: true
           readOnly: true
+          type: integer
+        location_launch_attempt_count_year:
+          nullable: true
+          readOnly: true
+          type: integer
         mission:
           allOf:
           - $ref: '#/components/schemas/Mission'
           readOnly: true
+        mission_patches:
+          items:
+            $ref: '#/components/schemas/MissionPatch'
+          readOnly: true
+          type: array
+        name:
+          readOnly: true
+          type: string
+        net:
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        orbital_launch_attempt_count:
+          nullable: true
+          readOnly: true
+          type: integer
+        orbital_launch_attempt_count_year:
+          nullable: true
+          readOnly: true
+          type: integer
         pad:
           allOf:
           - $ref: '#/components/schemas/Pad'
           readOnly: true
-        infoURLs:
-          type: array
-          items:
-            $ref: '#/components/schemas/InfoURL'
+        pad_launch_attempt_count:
+          nullable: true
           readOnly: true
-        vidURLs:
-          type: array
-          items:
-            $ref: '#/components/schemas/VidURL'
+          type: integer
+        pad_launch_attempt_count_year:
+          nullable: true
           readOnly: true
-        webcast_live:
-          type: boolean
+          type: integer
+        probability:
+          nullable: true
           readOnly: true
-        image:
-          type: string
-          readOnly: true
-        infographic:
-          type: string
-          readOnly: true
+          type: integer
         program:
-          type: array
           items:
             $ref: '#/components/schemas/Program'
           readOnly: true
-        orbital_launch_attempt_count:
-          type: integer
-          readOnly: true
-          nullable: true
-        location_launch_attempt_count:
-          type: integer
-          readOnly: true
-          nullable: true
-        pad_launch_attempt_count:
-          type: integer
-          readOnly: true
-          nullable: true
-        agency_launch_attempt_count:
-          type: integer
-          readOnly: true
-          nullable: true
-        orbital_launch_attempt_count_year:
-          type: integer
-          readOnly: true
-          nullable: true
-        location_launch_attempt_count_year:
-          type: integer
-          readOnly: true
-          nullable: true
-        pad_launch_attempt_count_year:
-          type: integer
-          readOnly: true
-          nullable: true
-        agency_launch_attempt_count_year:
-          type: integer
-          readOnly: true
-          nullable: true
-        mission_patches:
           type: array
-          items:
-            $ref: '#/components/schemas/MissionPatch'
+        r_spacex_api_id:
+          nullable: true
           readOnly: true
+          type: string
+        rocket:
+          allOf:
+          - $ref: '#/components/schemas/RocketDetailed'
+          readOnly: true
+        slug:
+          pattern: ^[-a-zA-Z0-9_]+$
+          type: string
+        status:
+          allOf:
+          - $ref: '#/components/schemas/LaunchStatus'
+          readOnly: true
+        updates:
+          items:
+            $ref: '#/components/schemas/Update'
+          readOnly: true
+          type: array
+        url:
+          format: uri
+          readOnly: true
+          type: string
+        vidURLs:
+          items:
+            $ref: '#/components/schemas/VidURL'
+          readOnly: true
+          type: array
+        webcast_live:
+          readOnly: true
+          type: boolean
+        window_end:
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
+        window_start:
+          format: date-time
+          nullable: true
+          readOnly: true
+          type: string
       required:
       - agency_launch_attempt_count
       - agency_launch_attempt_count_year
@@ -2262,128 +1314,128 @@ components:
       - webcast_live
       - window_end
       - window_start
-    LaunchSerializerCommon:
       type: object
+    LaunchSerializerCommon:
       properties:
-        id:
-          type: string
-          format: uuid
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        slug:
-          type: string
-          pattern: ^[-a-zA-Z0-9_]+$
-        name:
-          type: string
-          maxLength: 2048
-        status:
-          allOf:
-          - $ref: '#/components/schemas/LaunchStatus'
-          readOnly: true
-        last_updated:
-          type: string
-          format: date-time
-        net:
-          type: string
-          format: date-time
-          nullable: true
-        window_end:
-          type: string
-          format: date-time
-          nullable: true
-        window_start:
-          type: string
-          format: date-time
-          nullable: true
-        probability:
-          type: integer
+        agency_launch_attempt_count:
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
-        holdreason:
-          type: string
+          type: integer
+        agency_launch_attempt_count_year:
+          maximum: 2147483647
+          minimum: -2147483648
           nullable: true
-          maxLength: 2048
+          type: integer
         failreason:
-          type: string
-          nullable: true
           maxLength: 2048
+          nullable: true
+          type: string
         hashtag:
-          type: string
-          nullable: true
           maxLength: 2048
+          nullable: true
+          type: string
+        holdreason:
+          maxLength: 2048
+          nullable: true
+          type: string
+        id:
+          format: uuid
+          readOnly: true
+          type: string
+        image:
+          readOnly: true
+          type: string
+        infographic:
+          readOnly: true
+          type: string
+        last_updated:
+          format: date-time
+          type: string
         launch_service_provider:
           allOf:
           - $ref: '#/components/schemas/AgencySerializerMini'
           readOnly: true
-        rocket:
-          allOf:
-          - $ref: '#/components/schemas/RocketSerializerCommon'
-          readOnly: true
+        location_launch_attempt_count:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        location_launch_attempt_count_year:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
         mission:
           allOf:
           - $ref: '#/components/schemas/Mission'
           readOnly: true
+        name:
+          maxLength: 2048
+          type: string
+        net:
+          format: date-time
+          nullable: true
+          type: string
+        orbital_launch_attempt_count:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        orbital_launch_attempt_count_year:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
         pad:
           allOf:
           - $ref: '#/components/schemas/Pad'
           readOnly: true
-        webcast_live:
-          type: boolean
-        image:
-          type: string
-          readOnly: true
-        infographic:
-          type: string
-          readOnly: true
+        pad_launch_attempt_count:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        pad_launch_attempt_count_year:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        probability:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
         program:
-          type: array
           items:
             $ref: '#/components/schemas/Program'
           readOnly: true
-        orbital_launch_attempt_count:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
+          type: array
+        rocket:
+          allOf:
+          - $ref: '#/components/schemas/RocketSerializerCommon'
+          readOnly: true
+        slug:
+          pattern: ^[-a-zA-Z0-9_]+$
+          type: string
+        status:
+          allOf:
+          - $ref: '#/components/schemas/LaunchStatus'
+          readOnly: true
+        url:
+          format: uri
+          readOnly: true
+          type: string
+        webcast_live:
+          type: boolean
+        window_end:
+          format: date-time
           nullable: true
-        location_launch_attempt_count:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
+          type: string
+        window_start:
+          format: date-time
           nullable: true
-        pad_launch_attempt_count:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        agency_launch_attempt_count:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        orbital_launch_attempt_count_year:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        location_launch_attempt_count_year:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        pad_launch_attempt_count_year:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        agency_launch_attempt_count_year:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
+          type: string
       required:
       - id
       - image
@@ -2396,1517 +1448,825 @@ components:
       - slug
       - status
       - url
-    LaunchSerializerMini:
       type: object
+    LaunchSerializerMini:
       properties:
         id:
-          type: string
           format: uuid
           readOnly: true
-        name:
           type: string
+        name:
           maxLength: 2048
+          type: string
       required:
       - id
+      type: object
     LaunchStatus:
-      type: object
       properties:
-        id:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-        name:
-          type: string
-          readOnly: true
         abbrev:
-          type: string
           maxLength: 255
+          type: string
         description:
-          type: string
           maxLength: 2048
-      required:
-      - id
-      - name
-    Launcher:
-      type: object
-      properties:
+          type: string
         id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        flight_proven:
-          type: boolean
-        serial_number:
-          type: string
-          nullable: true
-          maxLength: 10
-        status:
-          type: string
-          maxLength: 2048
-        details:
-          type: string
-          maxLength: 2048
-        launcher_config:
-          allOf:
-          - $ref: '#/components/schemas/LauncherConfigList'
-          readOnly: true
-        image_url:
-          type: string
-          format: uri
-          nullable: true
-        flights:
-          type: integer
           maximum: 2147483647
           minimum: -2147483648
-          nullable: true
-        last_launch_date:
-          type: string
-          format: date-time
-          nullable: true
-        first_launch_date:
-          type: string
-          format: date-time
-          nullable: true
-      required:
-      - id
-      - launcher_config
-      - url
-    LauncherConfig:
-      type: object
-      properties:
-        id:
           type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
         name:
-          type: string
-          maxLength: 200
-        manufacturer:
-          allOf:
-          - $ref: '#/components/schemas/Agency'
           readOnly: true
-        program:
-          type: array
-          items:
-            $ref: '#/components/schemas/Program'
-          readOnly: true
-        family:
           type: string
-          maxLength: 200
-        full_name:
-          type: string
-          maxLength: 200
-        variant:
-          type: string
-          maxLength: 200
-        reusable:
-          type: boolean
-        image_url:
-          type: string
-          format: uri
-          nullable: true
-        info_url:
-          type: string
-          nullable: true
-          maxLength: 200
-        wiki_url:
-          type: string
-          nullable: true
-          maxLength: 200
       required:
       - id
-      - manufacturer
       - name
-      - program
-      - url
-    LauncherConfigDetail:
       type: object
+    LauncherConfigDetail:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
-          maxLength: 200
         active:
           type: boolean
-        reusable:
-          type: boolean
+        alias:
+          maxLength: 200
+          type: string
+        apogee:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          title: Apogee - Sub-Orbital Only (km)
+          type: integer
+        consecutive_successful_launches:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
         description:
-          type: string
           maxLength: 2048
+          type: string
+        diameter:
+          format: double
+          nullable: true
+          title: Max Diameter (m)
+          type: number
+        failed_launches:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
         family:
-          type: string
           maxLength: 200
+          type: string
         full_name:
-          type: string
           maxLength: 200
+          type: string
+        gto_capacity:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          title: GTO Capacity (kg)
+          type: integer
+        id:
+          readOnly: true
+          type: integer
+        image_url:
+          format: uri
+          nullable: true
+          type: string
+        info_url:
+          maxLength: 200
+          nullable: true
+          type: string
+        launch_cost:
+          maxLength: 200
+          nullable: true
+          title: Launch Cost ($)
+          type: string
+        launch_mass:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          title: Mass at Launch (T)
+          type: integer
+        length:
+          format: double
+          nullable: true
+          title: Length (m)
+          type: number
+        leo_capacity:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          title: LEO Capacity (kg)
+          type: integer
+        maiden_flight:
+          format: date
+          nullable: true
+          title: Maiden Flight Date
+          type: string
         manufacturer:
           allOf:
           - $ref: '#/components/schemas/AgencySerializerDetailedCommon'
           readOnly: true
+        max_stage:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        min_stage:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        name:
+          maxLength: 200
+          type: string
+        pending_launches:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
         program:
-          type: array
           items:
             $ref: '#/components/schemas/Program'
           readOnly: true
-        variant:
-          type: string
-          maxLength: 200
-        alias:
-          type: string
-          maxLength: 200
-        min_stage:
-          type: integer
+          type: array
+        reusable:
+          type: boolean
+        successful_launches:
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
-        max_stage:
           type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        length:
-          type: number
-          format: double
-          nullable: true
-          title: Length (m)
-        diameter:
-          type: number
-          format: double
-          nullable: true
-          title: Max Diameter (m)
-        maiden_flight:
-          type: string
-          format: date
-          nullable: true
-          title: Maiden Flight Date
-        launch_cost:
-          type: string
-          nullable: true
-          title: Launch Cost ($)
-          maxLength: 200
-        launch_mass:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-          title: Mass at Launch (T)
-        leo_capacity:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-          title: LEO Capacity (kg)
-        gto_capacity:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-          title: GTO Capacity (kg)
         to_thrust:
-          type: integer
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
           title: Thrust at Liftoff (kN)
-        apogee:
           type: integer
+        total_launch_count:
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
-          title: Apogee - Sub-Orbital Only (km)
-        vehicle_range:
           type: integer
+        url:
+          format: uri
+          readOnly: true
+          type: string
+        variant:
+          maxLength: 200
+          type: string
+        vehicle_range:
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
           title: Vehicle Range - Legacy
-        image_url:
-          type: string
-          format: uri
-          nullable: true
-        info_url:
-          type: string
-          nullable: true
-          maxLength: 200
+          type: integer
         wiki_url:
-          type: string
-          nullable: true
           maxLength: 200
-        total_launch_count:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
           nullable: true
-        consecutive_successful_launches:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        successful_launches:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        failed_launches:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        pending_launches:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
+          type: string
       required:
       - id
       - manufacturer
       - name
       - program
       - url
-    LauncherConfigDetailSerializerForAgency:
       type: object
+    LauncherConfigDetailSerializerForAgency:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
-          maxLength: 200
-        description:
-          type: string
-          maxLength: 2048
-        family:
-          type: string
-          maxLength: 200
-        full_name:
-          type: string
-          maxLength: 200
-        variant:
-          type: string
-          maxLength: 200
         alias:
-          type: string
           maxLength: 200
-        min_stage:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        max_stage:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        length:
-          type: number
-          format: double
-          nullable: true
-          title: Length (m)
-        diameter:
-          type: number
-          format: double
-          nullable: true
-          title: Max Diameter (m)
-        maiden_flight:
           type: string
-          format: date
-          nullable: true
-          title: Maiden Flight Date
-        launch_mass:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-          title: Mass at Launch (T)
-        leo_capacity:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-          title: LEO Capacity (kg)
-        gto_capacity:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-          title: GTO Capacity (kg)
-        to_thrust:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-          title: Thrust at Liftoff (kN)
         apogee:
-          type: integer
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
           title: Apogee - Sub-Orbital Only (km)
-        vehicle_range:
           type: integer
+        consecutive_successful_launches:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        description:
+          maxLength: 2048
+          type: string
+        diameter:
+          format: double
+          nullable: true
+          title: Max Diameter (m)
+          type: number
+        failed_launches:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        family:
+          maxLength: 200
+          type: string
+        full_name:
+          maxLength: 200
+          type: string
+        gto_capacity:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          title: GTO Capacity (kg)
+          type: integer
+        id:
+          readOnly: true
+          type: integer
+        image_url:
+          format: uri
+          nullable: true
+          type: string
+        info_url:
+          maxLength: 200
+          nullable: true
+          type: string
+        launch_mass:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          title: Mass at Launch (T)
+          type: integer
+        length:
+          format: double
+          nullable: true
+          title: Length (m)
+          type: number
+        leo_capacity:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          title: LEO Capacity (kg)
+          type: integer
+        maiden_flight:
+          format: date
+          nullable: true
+          title: Maiden Flight Date
+          type: string
+        max_stage:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        min_stage:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        name:
+          maxLength: 200
+          type: string
+        pending_launches:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        successful_launches:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        to_thrust:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          title: Thrust at Liftoff (kN)
+          type: integer
+        url:
+          format: uri
+          readOnly: true
+          type: string
+        variant:
+          maxLength: 200
+          type: string
+        vehicle_range:
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
           title: Vehicle Range - Legacy
-        image_url:
-          type: string
-          format: uri
-          nullable: true
-        info_url:
-          type: string
-          nullable: true
-          maxLength: 200
+          type: integer
         wiki_url:
-          type: string
-          nullable: true
           maxLength: 200
-        consecutive_successful_launches:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
           nullable: true
-        successful_launches:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        failed_launches:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        pending_launches:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
+          type: string
       required:
       - id
       - name
       - url
+      type: object
     LauncherConfigList:
-      type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
+        family:
+          maxLength: 200
           type: string
+        full_name:
+          maxLength: 200
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        name:
+          maxLength: 200
+          type: string
+        url:
           format: uri
           readOnly: true
-        name:
           type: string
-          maxLength: 200
-        family:
-          type: string
-          maxLength: 200
-        full_name:
-          type: string
-          maxLength: 200
         variant:
-          type: string
           maxLength: 200
+          type: string
       required:
       - id
       - name
       - url
-    LauncherDetail:
       type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        flight_proven:
-          type: boolean
-        serial_number:
-          type: string
-          nullable: true
-          maxLength: 10
-        status:
-          type: string
-          maxLength: 2048
-        details:
-          type: string
-          maxLength: 2048
-        launcher_config:
-          allOf:
-          - $ref: '#/components/schemas/LauncherConfigDetail'
-          readOnly: true
-        image_url:
-          type: string
-          format: uri
-          nullable: true
-        successful_landings:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        attempted_landings:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        flights:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        last_launch_date:
-          type: string
-          format: date-time
-          nullable: true
-        first_launch_date:
-          type: string
-          format: date-time
-          nullable: true
-      required:
-      - id
-      - launcher_config
-      - url
     LauncherDetailed:
-      type: object
       properties:
-        id:
+        attempted_landings:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
           type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
         details:
-          type: string
           maxLength: 2048
+          type: string
+        first_launch_date:
+          format: date-time
+          nullable: true
+          type: string
         flight_proven:
           type: boolean
-        serial_number:
-          type: string
-          nullable: true
-          maxLength: 10
-        status:
-          type: string
-          maxLength: 2048
-        image_url:
-          type: string
-          format: uri
-          nullable: true
-        successful_landings:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        attempted_landings:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
         flights:
-          type: integer
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
+          type: integer
+        id:
+          readOnly: true
+          type: integer
+        image_url:
+          format: uri
+          nullable: true
+          type: string
         last_launch_date:
-          type: string
           format: date-time
           nullable: true
-        first_launch_date:
           type: string
-          format: date-time
+        serial_number:
+          maxLength: 10
           nullable: true
-      required:
-      - id
-      - url
-    Location:
-      type: object
-      properties:
-        id:
+          type: string
+        status:
+          maxLength: 2048
+          type: string
+        successful_landings:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
           type: integer
-          readOnly: true
         url:
-          type: string
           format: uri
           readOnly: true
-        name:
           type: string
-          maxLength: 255
-        country_code:
-          type: string
-          maxLength: 255
-        map_image:
-          type: string
-          format: uri
-          nullable: true
-        total_launch_count:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        total_landing_count:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
       required:
       - id
       - url
-    LocationDetail:
       type: object
+    Location:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
         country_code:
-          type: string
           maxLength: 255
-        map_image:
           type: string
+        id:
+          readOnly: true
+          type: integer
+        map_image:
           format: uri
           nullable: true
-        total_launch_count:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
+          type: string
+        name:
+          maxLength: 255
+          type: string
         total_landing_count:
-          type: integer
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
+          type: integer
+        total_launch_count:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        url:
+          format: uri
+          readOnly: true
+          type: string
+      required:
+      - id
+      - url
+      type: object
+    LocationDetail:
+      properties:
+        country_code:
+          maxLength: 255
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        map_image:
+          format: uri
+          nullable: true
+          type: string
+        name:
+          maxLength: 255
+          type: string
         pads:
-          type: array
           items:
             $ref: '#/components/schemas/PadSerializerNoLocation'
+          type: array
+        total_landing_count:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        total_launch_count:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
       required:
       - id
       - pads
-    Mission:
       type: object
+    Mission:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
         description:
           type: string
-        launch_designator:
-          type: string
-          nullable: true
-          maxLength: 255
-        type:
-          type: string
+        id:
           readOnly: true
+          type: integer
+        launch_designator:
+          maxLength: 255
+          nullable: true
+          type: string
+        name:
+          maxLength: 255
+          type: string
         orbit:
           $ref: '#/components/schemas/Orbit'
+        type:
+          readOnly: true
+          type: string
       required:
       - id
       - name
       - orbit
       - type
-    MissionPatch:
       type: object
+    MissionPatch:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          maxLength: 200
-        priority:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-        image_url:
-          type: string
-          format: uri
         agency:
           allOf:
           - $ref: '#/components/schemas/AgencySerializerMini'
           readOnly: true
+        id:
+          readOnly: true
+          type: integer
+        image_url:
+          format: uri
+          type: string
+        name:
+          maxLength: 200
+          type: string
+        priority:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
       required:
       - agency
       - id
       - image_url
       - name
-    MissionType:
       type: object
-      properties:
-        id:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-        name:
-          type: string
-          maxLength: 255
-      required:
-      - id
-    NoticeType:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
-      required:
-      - id
-      - name
     Orbit:
-      type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          maxLength: 50
         abbrev:
-          type: string
           maxLength: 30
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        name:
+          maxLength: 50
+          type: string
       required:
       - abbrev
       - id
       - name
-    Pad:
       type: object
+    Pad:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
         agency_id:
-          type: integer
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
-        name:
-          type: string
-          maxLength: 255
+          type: integer
+        id:
+          readOnly: true
+          type: integer
         info_url:
-          type: string
           format: uri
-          nullable: true
           maxLength: 200
-        wiki_url:
+          nullable: true
           type: string
-          format: uri
-          nullable: true
-          maxLength: 200
-        map_url:
-          type: string
-          format: uri
-          nullable: true
-          maxLength: 200
         latitude:
-          type: string
-          nullable: true
           maxLength: 30
-        longitude:
-          type: string
           nullable: true
-          maxLength: 30
+          type: string
         location:
           $ref: '#/components/schemas/Location'
-        map_image:
+        longitude:
+          maxLength: 30
+          nullable: true
           type: string
+        map_image:
           format: uri
           nullable: true
-        total_launch_count:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
+          type: string
+        map_url:
+          format: uri
+          maxLength: 200
           nullable: true
+          type: string
+        name:
+          maxLength: 255
+          type: string
         orbital_launch_attempt_count:
-          type: integer
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
+          type: integer
+        total_launch_count:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        url:
+          format: uri
+          readOnly: true
+          type: string
+        wiki_url:
+          format: uri
+          maxLength: 200
+          nullable: true
+          type: string
       required:
       - id
       - location
       - url
-    PadSerializerNoLocation:
       type: object
+    PadSerializerNoLocation:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
         agency_id:
-          type: integer
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
-        name:
-          type: string
-          maxLength: 255
+          type: integer
+        id:
+          readOnly: true
+          type: integer
         info_url:
-          type: string
           format: uri
-          nullable: true
           maxLength: 200
-        wiki_url:
+          nullable: true
           type: string
-          format: uri
-          nullable: true
-          maxLength: 200
-        map_url:
-          type: string
-          format: uri
-          nullable: true
-          maxLength: 200
         latitude:
-          type: string
-          nullable: true
           maxLength: 30
+          nullable: true
+          type: string
         longitude:
-          type: string
-          nullable: true
           maxLength: 30
-        map_image:
+          nullable: true
           type: string
+        map_image:
           format: uri
           nullable: true
+          type: string
+        map_url:
+          format: uri
+          maxLength: 200
+          nullable: true
+          type: string
+        name:
+          maxLength: 255
+          type: string
         total_launch_count:
-          type: integer
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
+          type: integer
+        url:
+          format: uri
+          readOnly: true
+          type: string
+        wiki_url:
+          format: uri
+          maxLength: 200
+          nullable: true
+          type: string
       required:
       - id
       - url
-    PaginatedAgencyList:
       type: object
+    PaginatedAgencyList:
       properties:
         count:
-          type: integer
           example: 123
+          type: integer
         next:
-          type: string
-          nullable: true
-          format: uri
           example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
           format: uri
+          nullable: true
+          type: string
+        previous:
           example: http://api.example.org/accounts/?offset=200&limit=100
+          format: uri
+          nullable: true
+          type: string
         results:
-          type: array
           items:
             $ref: '#/components/schemas/Agency'
-    PaginatedAgencyTypeList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
           type: array
-          items:
-            $ref: '#/components/schemas/AgencyType'
+      type: object
     PaginatedAstronautNormalList:
-      type: object
       properties:
         count:
-          type: integer
           example: 123
+          type: integer
         next:
-          type: string
-          nullable: true
-          format: uri
           example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
           format: uri
+          nullable: true
+          type: string
+        previous:
           example: http://api.example.org/accounts/?offset=200&limit=100
+          format: uri
+          nullable: true
+          type: string
         results:
-          type: array
           items:
             $ref: '#/components/schemas/AstronautNormal'
-    PaginatedAstronautRoleList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
           type: array
-          items:
-            $ref: '#/components/schemas/AstronautRole'
-    PaginatedAstronautStatusList:
       type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/AstronautStatus'
-    PaginatedAstronautTypeList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/AstronautType'
-    PaginatedDockingEventList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/DockingEvent'
-    PaginatedDockingLocationList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/DockingLocation'
-    PaginatedEventTypeList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/EventType'
     PaginatedEventsList:
-      type: object
       properties:
         count:
-          type: integer
           example: 123
+          type: integer
         next:
-          type: string
-          nullable: true
-          format: uri
           example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
           format: uri
+          nullable: true
+          type: string
+        previous:
           example: http://api.example.org/accounts/?offset=200&limit=100
+          format: uri
+          nullable: true
+          type: string
         results:
-          type: array
           items:
             $ref: '#/components/schemas/Events'
-    PaginatedExpeditionList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
           type: array
-          items:
-            $ref: '#/components/schemas/Expedition'
-    PaginatedFirstStageTypeList:
       type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/FirstStageType'
-    PaginatedLandingLocationList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/LandingLocation'
     PaginatedLaunchSerializerCommonList:
-      type: object
       properties:
         count:
-          type: integer
           example: 123
+          type: integer
         next:
-          type: string
-          nullable: true
-          format: uri
           example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
           format: uri
+          nullable: true
+          type: string
+        previous:
           example: http://api.example.org/accounts/?offset=200&limit=100
+          format: uri
+          nullable: true
+          type: string
         results:
-          type: array
           items:
             $ref: '#/components/schemas/LaunchSerializerCommon'
-    PaginatedLaunchStatusList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
           type: array
-          items:
-            $ref: '#/components/schemas/LaunchStatus'
-    PaginatedLauncherConfigList:
       type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/LauncherConfig'
-    PaginatedLauncherList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Launcher'
     PaginatedLocationList:
-      type: object
       properties:
         count:
-          type: integer
           example: 123
+          type: integer
         next:
-          type: string
-          nullable: true
-          format: uri
           example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
           format: uri
+          nullable: true
+          type: string
+        previous:
           example: http://api.example.org/accounts/?offset=200&limit=100
+          format: uri
+          nullable: true
+          type: string
         results:
-          type: array
           items:
             $ref: '#/components/schemas/Location'
-    PaginatedMissionTypeList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
           type: array
-          items:
-            $ref: '#/components/schemas/MissionType'
-    PaginatedNoticeTypeList:
       type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/NoticeType'
-    PaginatedOrbitList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Orbit'
-    PaginatedPadList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Pad'
-    PaginatedProgramList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Program'
-    PaginatedRoadClosureStatusList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/RoadClosureStatus'
     PaginatedSpaceStationList:
-      type: object
       properties:
         count:
-          type: integer
           example: 123
+          type: integer
         next:
-          type: string
-          nullable: true
-          format: uri
           example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
           format: uri
+          nullable: true
+          type: string
+        previous:
           example: http://api.example.org/accounts/?offset=200&limit=100
+          format: uri
+          nullable: true
+          type: string
         results:
-          type: array
           items:
             $ref: '#/components/schemas/SpaceStation'
-    PaginatedSpaceStationStatusList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
           type: array
-          items:
-            $ref: '#/components/schemas/SpaceStationStatus'
-    PaginatedSpacecraftConfigurationList:
       type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/SpacecraftConfiguration'
-    PaginatedSpacecraftFlightList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/SpacecraftFlight'
-    PaginatedSpacecraftList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Spacecraft'
-    PaginatedSpacecraftStatusList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/SpacecraftStatus'
-    PaginatedUpdateList:
-      type: object
-      properties:
-        count:
-          type: integer
-          example: 123
-        next:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=400&limit=100
-        previous:
-          type: string
-          nullable: true
-          format: uri
-          example: http://api.example.org/accounts/?offset=200&limit=100
-        results:
-          type: array
-          items:
-            $ref: '#/components/schemas/Update'
     Program:
-      type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
-        description:
-          type: string
-          nullable: true
-          maxLength: 40000
         agencies:
-          type: array
           items:
             $ref: '#/components/schemas/AgencySerializerMini'
           readOnly: true
-        image_url:
-          type: string
-          format: uri
-        start_date:
-          type: string
-          format: date-time
-          nullable: true
-        end_date:
-          type: string
-          format: date-time
-          nullable: true
-        info_url:
-          type: string
-          format: uri
-          nullable: true
-          maxLength: 200
-        wiki_url:
-          type: string
-          format: uri
-          nullable: true
-          maxLength: 200
-        mission_patches:
           type: array
+        description:
+          maxLength: 40000
+          nullable: true
+          type: string
+        end_date:
+          format: date-time
+          nullable: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        image_url:
+          format: uri
+          type: string
+        info_url:
+          format: uri
+          maxLength: 200
+          nullable: true
+          type: string
+        mission_patches:
           items:
             $ref: '#/components/schemas/MissionPatch'
           readOnly: true
+          type: array
+        name:
+          maxLength: 255
+          type: string
+        start_date:
+          format: date-time
+          nullable: true
+          type: string
+        url:
+          format: uri
+          readOnly: true
+          type: string
+        wiki_url:
+          format: uri
+          maxLength: 200
+          nullable: true
+          type: string
       required:
       - agencies
       - id
       - image_url
       - mission_patches
       - name
-      - url
-    RoadClosureStatus:
       type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
-      required:
-      - id
-      - name
     RocketDetailed:
-      type: object
       properties:
-        id:
-          type: integer
-          readOnly: true
         configuration:
           allOf:
           - $ref: '#/components/schemas/LauncherConfigDetail'
           readOnly: true
+        id:
+          readOnly: true
+          type: integer
         launcher_stage:
-          type: array
           items:
             $ref: '#/components/schemas/FirstStage'
           readOnly: true
+          type: array
         spacecraft_stage:
           allOf:
           - $ref: '#/components/schemas/SpacecraftFlightDetailedSerializerForLaunch'
@@ -3916,32 +2276,55 @@ components:
       - id
       - launcher_stage
       - spacecraft_stage
-    RocketSerializerCommon:
       type: object
+    RocketSerializerCommon:
       properties:
-        id:
-          type: integer
-          readOnly: true
         configuration:
           allOf:
           - $ref: '#/components/schemas/LauncherConfigList'
           readOnly: true
+        id:
+          readOnly: true
+          type: integer
       required:
       - configuration
       - id
-    SpaceStation:
       type: object
+    SpaceStation:
       properties:
+        active_expedition:
+          items:
+            $ref: '#/components/schemas/ExpeditionSerializerForSpacestation'
+          readOnly: true
+          type: array
+        deorbited:
+          format: date
+          nullable: true
+          type: string
+        description:
+          maxLength: 2048
+          type: string
+        founded:
+          format: date
+          type: string
         id:
+          readOnly: true
           type: integer
-          readOnly: true
-        url:
-          type: string
+        image_url:
           format: uri
-          readOnly: true
-        name:
+          nullable: true
           type: string
+        name:
           maxLength: 255
+          type: string
+        orbit:
+          readOnly: true
+          type: string
+        owners:
+          items:
+            $ref: '#/components/schemas/AgencyList'
+          readOnly: true
+          type: array
         status:
           allOf:
           - $ref: '#/components/schemas/SpaceStationStatus'
@@ -3950,33 +2333,10 @@ components:
           allOf:
           - $ref: '#/components/schemas/SpaceStationType'
           readOnly: true
-        founded:
-          type: string
-          format: date
-        deorbited:
-          type: string
-          format: date
-          nullable: true
-        description:
-          type: string
-          maxLength: 2048
-        orbit:
-          type: string
-          readOnly: true
-        owners:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgencyList'
-          readOnly: true
-        active_expedition:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExpeditionSerializerForSpacestation'
-          readOnly: true
-        image_url:
-          type: string
+        url:
           format: uri
-          nullable: true
+          readOnly: true
+          type: string
       required:
       - active_expedition
       - description
@@ -3988,19 +2348,67 @@ components:
       - status
       - type
       - url
-    SpaceStationDetailed:
       type: object
+    SpaceStationDetailed:
       properties:
-        id:
+        active_expeditions:
+          items:
+            $ref: '#/components/schemas/ExpeditionDetailedSerializerForSpacestation'
+          readOnly: true
+          type: array
+        deorbited:
+          format: date
+          nullable: true
+          type: string
+        description:
+          maxLength: 2048
+          type: string
+        docked_vehicles:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
           type: integer
+        docking_location:
+          items:
+            $ref: '#/components/schemas/DockingLocationSerializerForSpacestation'
           readOnly: true
-        url:
+          type: array
+        founded:
+          format: date
           type: string
+        height:
+          format: double
+          nullable: true
+          title: Height (m)
+          type: number
+        id:
+          readOnly: true
+          type: integer
+        image_url:
           format: uri
-          readOnly: true
-        name:
+          nullable: true
           type: string
+        mass:
+          format: double
+          nullable: true
+          title: Mass (T)
+          type: number
+        name:
           maxLength: 255
+          type: string
+        onboard_crew:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          type: integer
+        orbit:
+          readOnly: true
+          type: string
+        owners:
+          items:
+            $ref: '#/components/schemas/Agency'
+          readOnly: true
+          type: array
         status:
           allOf:
           - $ref: '#/components/schemas/SpaceStationStatus'
@@ -4009,69 +2417,21 @@ components:
           allOf:
           - $ref: '#/components/schemas/SpaceStationType'
           readOnly: true
-        founded:
+        url:
+          format: uri
+          readOnly: true
           type: string
-          format: date
-        deorbited:
-          type: string
-          format: date
-          nullable: true
-        height:
-          type: number
-          format: double
-          nullable: true
-          title: Height (m)
-        width:
-          type: number
-          format: double
-          nullable: true
-          title: Width (m)
-        mass:
-          type: number
-          format: double
-          nullable: true
-          title: Mass (T)
         volume:
-          type: integer
           maximum: 2147483647
           minimum: -2147483648
           nullable: true
           title: Volume (m^3)
-        description:
-          type: string
-          maxLength: 2048
-        orbit:
-          type: string
-          readOnly: true
-        onboard_crew:
           type: integer
-          maximum: 2147483647
-          minimum: -2147483648
+        width:
+          format: double
           nullable: true
-        docked_vehicles:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        owners:
-          type: array
-          items:
-            $ref: '#/components/schemas/Agency'
-          readOnly: true
-        active_expeditions:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExpeditionDetailedSerializerForSpacestation'
-          readOnly: true
-        docking_location:
-          type: array
-          items:
-            $ref: '#/components/schemas/DockingLocationSerializerForSpacestation'
-          readOnly: true
-        image_url:
-          type: string
-          format: uri
-          nullable: true
+          title: Width (m)
+          type: number
       required:
       - active_expeditions
       - description
@@ -4084,80 +2444,36 @@ components:
       - status
       - type
       - url
-    SpaceStationDetailedSerializerForExpedition:
       type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
-        status:
-          allOf:
-          - $ref: '#/components/schemas/SpaceStationStatus'
-          readOnly: true
-        founded:
-          type: string
-          format: date
-        description:
-          type: string
-          maxLength: 2048
-        orbit:
-          type: string
-          readOnly: true
-        image_url:
-          type: string
-          format: uri
-          nullable: true
-        owners:
-          type: array
-          items:
-            $ref: '#/components/schemas/AgencyList'
-          readOnly: true
-      required:
-      - description
-      - founded
-      - id
-      - name
-      - orbit
-      - owners
-      - status
-      - url
     SpaceStationSerializerForCommon:
-      type: object
       properties:
+        description:
+          maxLength: 2048
+          type: string
+        founded:
+          format: date
+          type: string
         id:
+          readOnly: true
           type: integer
-          readOnly: true
-        url:
-          type: string
+        image_url:
           format: uri
-          readOnly: true
-        name:
+          nullable: true
           type: string
+        name:
           maxLength: 255
+          type: string
+        orbit:
+          readOnly: true
+          type: string
         status:
           allOf:
           - $ref: '#/components/schemas/SpaceStationStatus'
           readOnly: true
-        founded:
-          type: string
-          format: date
-        description:
-          type: string
-          maxLength: 2048
-        orbit:
-          type: string
-          readOnly: true
-        image_url:
-          type: string
+        url:
           format: uri
-          nullable: true
+          readOnly: true
+          type: string
       required:
       - description
       - founded
@@ -4166,126 +2482,105 @@ components:
       - orbit
       - status
       - url
-    SpaceStationSerializerForDocking:
       type: object
+    SpaceStationSerializerForDocking:
       properties:
         id:
-          type: integer
           readOnly: true
-        url:
+          type: integer
+        name:
+          maxLength: 255
           type: string
+        url:
           format: uri
           readOnly: true
-        name:
           type: string
-          maxLength: 255
       required:
       - id
       - name
       - url
-    SpaceStationSerializerForDockingEvent:
       type: object
+    SpaceStationSerializerForExpedition:
       properties:
         id:
+          readOnly: true
           type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
         image_url:
-          type: string
           format: uri
           nullable: true
-      required:
-      - id
-      - name
-      - url
-    SpaceStationSerializerForExpedition:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
           type: string
-          format: uri
-          readOnly: true
         name:
-          type: string
           maxLength: 255
+          type: string
+        orbit:
+          readOnly: true
+          type: string
         status:
           allOf:
           - $ref: '#/components/schemas/SpaceStationStatus'
           readOnly: true
-        orbit:
-          type: string
-          readOnly: true
-        image_url:
-          type: string
+        url:
           format: uri
-          nullable: true
+          readOnly: true
+          type: string
       required:
       - id
       - name
       - orbit
       - status
       - url
+      type: object
     SpaceStationStatus:
-      type: object
       properties:
         id:
-          type: integer
           readOnly: true
+          type: integer
         name:
-          type: string
           maxLength: 255
+          type: string
       required:
       - id
       - name
+      type: object
     SpaceStationType:
-      type: object
       properties:
         id:
-          type: integer
           readOnly: true
+          type: integer
         name:
-          type: string
           maxLength: 255
+          type: string
       required:
       - id
       - name
-    Spacecraft:
       type: object
+    Spacecraft:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
-        serial_number:
-          type: string
-          nullable: true
-          maxLength: 255
-        status:
-          allOf:
-          - $ref: '#/components/schemas/SpacecraftStatus'
-          readOnly: true
         description:
-          type: string
           maxLength: 2048
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        name:
+          maxLength: 255
+          type: string
+        serial_number:
+          maxLength: 255
+          nullable: true
+          type: string
         spacecraft_config:
           allOf:
           - $ref: '#/components/schemas/SpacecraftConfig'
           readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/SpacecraftStatus'
+          readOnly: true
+        url:
+          format: uri
+          readOnly: true
+          type: string
       required:
       - description
       - id
@@ -4293,550 +2588,1056 @@ components:
       - spacecraft_config
       - status
       - url
-    SpacecraftConfig:
       type: object
+    SpacecraftConfig:
       properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
-          maxLength: 200
-        type:
-          allOf:
-          - $ref: '#/components/schemas/SpacecraftConfigType'
-          readOnly: true
         agency:
           allOf:
           - $ref: '#/components/schemas/AgencySerializerMini'
           readOnly: true
+        id:
+          readOnly: true
+          type: integer
+        image_url:
+          format: uri
+          nullable: true
+          type: string
         in_use:
           type: boolean
-        image_url:
-          type: string
-          format: uri
-          nullable: true
-      required:
-      - agency
-      - id
-      - name
-      - type
-      - url
-    SpacecraftConfigType:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
         name:
-          type: string
-          maxLength: 255
-      required:
-      - id
-      - name
-    SpacecraftConfiguration:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
           maxLength: 200
-        agency:
-          allOf:
-          - $ref: '#/components/schemas/Agency'
-          readOnly: true
-        in_use:
-          type: boolean
-        capability:
           type: string
-          maxLength: 2048
-        maiden_flight:
-          type: string
-          format: date
-          nullable: true
-        human_rated:
-          type: boolean
-        crew_capacity:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        image_url:
-          type: string
-          format: uri
-          nullable: true
-        nation_url:
-          type: string
-          format: uri
-          nullable: true
-        wiki_link:
-          type: string
-          format: uri
-          maxLength: 200
-        info_link:
-          type: string
-          format: uri
-          maxLength: 200
-      required:
-      - agency
-      - id
-      - name
-      - url
-    SpacecraftConfigurationDetail:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
-          maxLength: 200
         type:
           allOf:
           - $ref: '#/components/schemas/SpacecraftConfigType'
           readOnly: true
-        agency:
-          allOf:
-          - $ref: '#/components/schemas/Agency'
+        url:
+          format: uri
           readOnly: true
-        in_use:
-          type: boolean
-        capability:
           type: string
-          maxLength: 2048
-        history:
-          type: string
-          maxLength: 1000
-        details:
-          type: string
-          maxLength: 1000
-        maiden_flight:
-          type: string
-          format: date
-          nullable: true
-        height:
-          type: number
-          format: double
-          nullable: true
-          title: Length (m)
-        diameter:
-          type: number
-          format: double
-          nullable: true
-          title: Diameter (m)
-        human_rated:
-          type: boolean
-        crew_capacity:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-        payload_capacity:
-          type: integer
-          maximum: 2147483647
-          minimum: -2147483648
-          nullable: true
-          title: Payload Capacity (kg)
-        flight_life:
-          type: string
-          nullable: true
-          maxLength: 2048
-        image_url:
-          type: string
-          format: uri
-          nullable: true
-        nation_url:
-          type: string
-          format: uri
-          nullable: true
-        wiki_link:
-          type: string
-          format: uri
-          maxLength: 200
-        info_link:
-          type: string
-          format: uri
-          maxLength: 200
       required:
       - agency
       - id
       - name
       - type
       - url
-    SpacecraftDetailed:
       type: object
+    SpacecraftConfigType:
       properties:
         id:
+          readOnly: true
           type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
         name:
-          type: string
           maxLength: 255
-        serial_number:
           type: string
-          nullable: true
-          maxLength: 255
-        status:
+      required:
+      - id
+      - name
+      type: object
+    SpacecraftConfigurationDetail:
+      properties:
+        agency:
           allOf:
-          - $ref: '#/components/schemas/SpacecraftStatus'
+          - $ref: '#/components/schemas/Agency'
           readOnly: true
-        description:
-          type: string
+        capability:
           maxLength: 2048
-        spacecraft_config:
-          allOf:
-          - $ref: '#/components/schemas/SpacecraftConfigurationDetail'
-          readOnly: true
-        flights:
-          type: array
-          items:
-            $ref: '#/components/schemas/SpacecraftFlight'
-          readOnly: true
-      required:
-      - description
-      - flights
-      - id
-      - name
-      - spacecraft_config
-      - status
-      - url
-    SpacecraftDetailedNoFlights:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
           type: string
-          format: uri
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
-        serial_number:
-          type: string
+        crew_capacity:
+          maximum: 2147483647
+          minimum: -2147483648
           nullable: true
-          maxLength: 255
-        status:
-          allOf:
-          - $ref: '#/components/schemas/SpacecraftStatus'
-          readOnly: true
-        description:
+          type: integer
+        details:
+          maxLength: 1000
           type: string
+        diameter:
+          format: double
+          nullable: true
+          title: Diameter (m)
+          type: number
+        flight_life:
           maxLength: 2048
-        spacecraft_config:
-          allOf:
-          - $ref: '#/components/schemas/SpacecraftConfigurationDetail'
-          readOnly: true
-      required:
-      - description
-      - id
-      - name
-      - spacecraft_config
-      - status
-      - url
-    SpacecraftFlight:
-      type: object
-      properties:
+          nullable: true
+          type: string
+        height:
+          format: double
+          nullable: true
+          title: Length (m)
+          type: number
+        history:
+          maxLength: 1000
+          type: string
+        human_rated:
+          type: boolean
         id:
+          readOnly: true
           type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        destination:
-          type: string
-          nullable: true
-          maxLength: 255
-        mission_end:
-          type: string
-          format: date-time
-          nullable: true
-        spacecraft:
-          allOf:
-          - $ref: '#/components/schemas/Spacecraft'
-          readOnly: true
-        launch:
-          allOf:
-          - $ref: '#/components/schemas/LaunchSerializerCommon'
-          readOnly: true
-      required:
-      - id
-      - launch
-      - spacecraft
-      - url
-    SpacecraftFlightDetailed:
-      type: object
-      properties:
-        id:
-          type: integer
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        mission_end:
-          type: string
-          format: date-time
-          nullable: true
-        destination:
-          type: string
-          nullable: true
-          maxLength: 255
-        launch_crew:
-          type: array
-          items:
-            $ref: '#/components/schemas/AstronautFlight'
-          readOnly: true
-        onboard_crew:
-          type: array
-          items:
-            $ref: '#/components/schemas/AstronautFlight'
-          readOnly: true
-        landing_crew:
-          type: array
-          items:
-            $ref: '#/components/schemas/AstronautFlight'
-          readOnly: true
-        spacecraft:
-          allOf:
-          - $ref: '#/components/schemas/SpacecraftDetailedNoFlights'
-          readOnly: true
-        launch:
-          allOf:
-          - $ref: '#/components/schemas/LaunchSerializerCommon'
-          readOnly: true
-        docking_events:
-          type: array
-          items:
-            $ref: '#/components/schemas/DockingEventSerializerForSpacecraftFlight'
-          readOnly: true
-      required:
-      - docking_events
-      - id
-      - landing_crew
-      - launch
-      - launch_crew
-      - onboard_crew
-      - spacecraft
-      - url
-    SpacecraftFlightDetailedSerializerForLaunch:
-      type: object
-      properties:
-        id:
-          type: integer
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        mission_end:
-          type: string
-          format: date-time
-          nullable: true
-        destination:
-          type: string
-          nullable: true
-          maxLength: 255
-        launch_crew:
-          type: array
-          items:
-            $ref: '#/components/schemas/AstronautFlight'
-          readOnly: true
-        onboard_crew:
-          type: array
-          items:
-            $ref: '#/components/schemas/AstronautFlight'
-          readOnly: true
-        landing_crew:
-          type: array
-          items:
-            $ref: '#/components/schemas/AstronautFlight'
-          readOnly: true
-        spacecraft:
-          allOf:
-          - $ref: '#/components/schemas/SpacecraftDetailedNoFlights'
-          readOnly: true
-        docking_events:
-          type: array
-          items:
-            $ref: '#/components/schemas/DockingEventSerializerForSpacecraftFlight'
-          readOnly: true
-      required:
-      - docking_events
-      - id
-      - landing_crew
-      - launch_crew
-      - onboard_crew
-      - spacecraft
-      - url
-    SpacecraftFlightForDockingEvent:
-      type: object
-      properties:
-        id:
-          type: integer
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        spacecraft:
-          allOf:
-          - $ref: '#/components/schemas/SpacecraftDetailedNoFlights'
-          readOnly: true
-        launch:
-          allOf:
-          - $ref: '#/components/schemas/LaunchSerializerCommon'
-          readOnly: true
-      required:
-      - id
-      - launch
-      - spacecraft
-      - url
-    SpacecraftFlightSerializerForDockingEvent:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        destination:
-          type: string
-          nullable: true
-          maxLength: 255
-        mission_end:
-          type: string
-          format: date-time
-          nullable: true
-        spacecraft:
-          allOf:
-          - $ref: '#/components/schemas/Spacecraft'
-          readOnly: true
-      required:
-      - id
-      - spacecraft
-      - url
-    SpacecraftFlightSerializerForDockingEventDetailed:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        url:
-          type: string
-          format: uri
-          readOnly: true
-        destination:
-          type: string
-          nullable: true
-          maxLength: 255
-        mission_end:
-          type: string
-          format: date-time
-          nullable: true
-        spacecraft:
-          allOf:
-          - $ref: '#/components/schemas/SpacecraftDetailedNoFlights'
-          readOnly: true
-      required:
-      - id
-      - spacecraft
-      - url
-    SpacecraftStatus:
-      type: object
-      properties:
-        id:
-          type: integer
-          readOnly: true
-        name:
-          type: string
-          maxLength: 255
-      required:
-      - id
-      - name
-    Update:
-      type: object
-      properties:
-        id:
-          type: integer
-        profile_image:
-          type: string
-          readOnly: true
-        comment:
-          type: string
-          nullable: true
-          maxLength: 40000
-        info_url:
-          type: string
+        image_url:
           format: uri
           nullable: true
+          type: string
+        in_use:
+          type: boolean
+        info_link:
+          format: uri
           maxLength: 200
-        created_by:
           type: string
+        maiden_flight:
+          format: date
+          nullable: true
+          type: string
+        name:
+          maxLength: 200
+          type: string
+        nation_url:
+          format: uri
+          nullable: true
+          type: string
+        payload_capacity:
+          maximum: 2147483647
+          minimum: -2147483648
+          nullable: true
+          title: Payload Capacity (kg)
+          type: integer
+        type:
+          allOf:
+          - $ref: '#/components/schemas/SpacecraftConfigType'
           readOnly: true
-        created_on:
+        url:
+          format: uri
+          readOnly: true
           type: string
+        wiki_link:
+          format: uri
+          maxLength: 200
+          type: string
+      required:
+      - agency
+      - id
+      - name
+      - type
+      - url
+      type: object
+    SpacecraftDetailedNoFlights:
+      properties:
+        description:
+          maxLength: 2048
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        name:
+          maxLength: 255
+          type: string
+        serial_number:
+          maxLength: 255
+          nullable: true
+          type: string
+        spacecraft_config:
+          allOf:
+          - $ref: '#/components/schemas/SpacecraftConfigurationDetail'
+          readOnly: true
+        status:
+          allOf:
+          - $ref: '#/components/schemas/SpacecraftStatus'
+          readOnly: true
+        url:
+          format: uri
+          readOnly: true
+          type: string
+      required:
+      - description
+      - id
+      - name
+      - spacecraft_config
+      - status
+      - url
+      type: object
+    SpacecraftFlight:
+      properties:
+        destination:
+          maxLength: 255
+          nullable: true
+          type: string
+        id:
+          readOnly: true
+          type: integer
+        launch:
+          allOf:
+          - $ref: '#/components/schemas/LaunchSerializerCommon'
+          readOnly: true
+        mission_end:
+          format: date-time
+          nullable: true
+          type: string
+        spacecraft:
+          allOf:
+          - $ref: '#/components/schemas/Spacecraft'
+          readOnly: true
+        url:
+          format: uri
+          readOnly: true
+          type: string
+      required:
+      - id
+      - launch
+      - spacecraft
+      - url
+      type: object
+    SpacecraftFlightDetailedSerializerForLaunch:
+      properties:
+        destination:
+          maxLength: 255
+          nullable: true
+          type: string
+        docking_events:
+          items:
+            $ref: '#/components/schemas/DockingEventSerializerForSpacecraftFlight'
+          readOnly: true
+          type: array
+        id:
+          type: integer
+        landing_crew:
+          items:
+            $ref: '#/components/schemas/AstronautFlight'
+          readOnly: true
+          type: array
+        launch_crew:
+          items:
+            $ref: '#/components/schemas/AstronautFlight'
+          readOnly: true
+          type: array
+        mission_end:
+          format: date-time
+          nullable: true
+          type: string
+        onboard_crew:
+          items:
+            $ref: '#/components/schemas/AstronautFlight'
+          readOnly: true
+          type: array
+        spacecraft:
+          allOf:
+          - $ref: '#/components/schemas/SpacecraftDetailedNoFlights'
+          readOnly: true
+        url:
+          format: uri
+          readOnly: true
+          type: string
+      required:
+      - docking_events
+      - id
+      - landing_crew
+      - launch_crew
+      - onboard_crew
+      - spacecraft
+      - url
+      type: object
+    SpacecraftFlightForDockingEvent:
+      properties:
+        id:
+          type: integer
+        launch:
+          allOf:
+          - $ref: '#/components/schemas/LaunchSerializerCommon'
+          readOnly: true
+        spacecraft:
+          allOf:
+          - $ref: '#/components/schemas/SpacecraftDetailedNoFlights'
+          readOnly: true
+        url:
+          format: uri
+          readOnly: true
+          type: string
+      required:
+      - id
+      - launch
+      - spacecraft
+      - url
+      type: object
+    SpacecraftStatus:
+      properties:
+        id:
+          readOnly: true
+          type: integer
+        name:
+          maxLength: 255
+          type: string
+      required:
+      - id
+      - name
+      type: object
+    Update:
+      properties:
+        comment:
+          maxLength: 40000
+          nullable: true
+          type: string
+        created_by:
+          readOnly: true
+          type: string
+        created_on:
           format: date-time
           readOnly: true
+          type: string
+        id:
+          type: integer
+        info_url:
+          format: uri
+          maxLength: 200
+          nullable: true
+          type: string
+        profile_image:
+          readOnly: true
+          type: string
       required:
       - created_by
       - created_on
       - id
       - profile_image
-    VidURL:
       type: object
+    VidURL:
       properties:
+        description:
+          maxLength: 350
+          nullable: true
+          type: string
+        feature_image:
+          format: uri
+          maxLength: 200
+          nullable: true
+          type: string
         priority:
-          type: integer
           maximum: 2147483647
           minimum: -2147483648
+          type: integer
         title:
-          type: string
-          nullable: true
           maxLength: 200
-        description:
-          type: string
           nullable: true
-          maxLength: 350
-        feature_image:
           type: string
-          format: uri
-          nullable: true
-          maxLength: 200
         url:
-          type: string
           format: uri
+          type: string
       required:
       - url
+      type: object
   securitySchemes:
     basicAuth:
-      type: http
       scheme: basic
+      type: http
     cookieAuth:
-      type: apiKey
       in: cookie
       name: sessionid
-    tokenAuth:
       type: apiKey
+    tokenAuth:
+      description: Token-based authentication with required prefix "Token"
       in: header
       name: Authorization
-      description: Token-based authentication with required prefix "Token"
+      type: apiKey
+info:
+  contact:
+    email: support@thespacedevs.com
+    name: The Space Devs
+  description: ''
+  license:
+    name: Apache License 2.0
+  title: Launch Library
+  version: 1.0.0
+openapi: 3.0.3
+paths:
+  /2.2.0/agencies/:
+    get:
+      description: Space Agencies
+      operationId: getAgencies
+      parameters:
+      - in: query
+        name: abbrev__contains
+        schema:
+          type: string
+      - in: query
+        name: administrator__contains
+        schema:
+          type: string
+      - in: query
+        name: agency_type
+        schema:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+      - in: query
+        name: attempted_landings__gte
+        schema:
+          type: integer
+      - in: query
+        name: attempted_landings__lte
+        schema:
+          type: integer
+      - in: query
+        name: description__contains
+        schema:
+          type: string
+      - in: query
+        name: failed_landings__gte
+        schema:
+          type: integer
+      - in: query
+        name: failed_landings__lte
+        schema:
+          type: integer
+      - in: query
+        name: failed_launches__gte
+        schema:
+          type: integer
+      - in: query
+        name: failed_launches__lte
+        schema:
+          type: integer
+      - in: query
+        name: featured
+        schema:
+          type: boolean
+      - in: query
+        name: id
+        schema:
+          type: integer
+      - description: Limit
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+      - in: query
+        name: name__contains
+        schema:
+          type: string
+      - description: Offset
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+      - description: Ordering field
+        in: query
+        name: ordering
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: parent
+        schema:
+          type: integer
+      - description: search term.
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: successful_landings__gte
+        schema:
+          type: integer
+      - in: query
+        name: successful_landings__lte
+        schema:
+          type: integer
+      - in: query
+        name: successful_launches__gte
+        schema:
+          type: integer
+      - in: query
+        name: successful_launches__lte
+        schema:
+          type: integer
+      - in: query
+        name: total_launch_count__gte
+        schema:
+          type: integer
+      - in: query
+        name: total_launch_count__lte
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAgencyList'
+          description: ''
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      tags:
+      - agencies
+  /2.2.0/agencies/{id}/:
+    get:
+      description: Single Agencies
+      operationId: getAgenciesId
+      parameters:
+      - description: Agency Id
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgencySerializerDetailed'
+          description: ''
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      tags:
+      - agencies
+  /2.2.0/astronaut/:
+    get:
+      description: Astronaut List
+      operationId: getAstronaut
+      parameters:
+      - in: query
+        name: age__gte
+        schema:
+          type: integer
+      - in: query
+        name: age__lte
+        schema:
+          type: integer
+      - in: query
+        name: date_of_birth__gte
+        schema:
+          format: date
+          type: string
+      - in: query
+        name: date_of_birth__lte
+        schema:
+          format: date
+          type: string
+      - in: query
+        name: date_of_death__gte
+        schema:
+          format: date
+          type: string
+      - in: query
+        name: date_of_death__lte
+        schema:
+          format: date
+          type: string
+      - in: query
+        name: flights_count__gte
+        schema:
+          type: integer
+      - in: query
+        name: flights_count__lte
+        schema:
+          type: integer
+      - in: query
+        name: landings_count__gte
+        schema:
+          type: integer
+      - in: query
+        name: landings_count__lte
+        schema:
+          type: integer
+      - description: limit results
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+      - description: offset
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+      - description: field to order
+        in: query
+        name: ordering
+        required: false
+        schema:
+          type: string
+      - description: search term.
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: type__id
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAstronautNormalList'
+          description: ''
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      tags:
+      - astronaut
+  /2.2.0/astronaut/{id}/:
+    get:
+      description: Single Astronaut
+      operationId: getAstronautId
+      parameters:
+      - description: Astronuat Id
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AstronautDetailed'
+          description: ''
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      tags:
+      - astronaut
+  /2.2.0/dashboard/starship/:
+    get:
+      description: SpaceX Starship Dashboard
+      operationId: getDashboardStarship
+      responses:
+        '200':
+          description: No response body
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      tags:
+      - dashboard
+  /2.2.0/event/:
+    get:
+      description: Events list
+      operationId: getEvent
+      parameters:
+      - in: query
+        name: id
+        schema:
+          type: integer
+      - description: Limit results
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+      - description: offset
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+      - explode: true
+        in: query
+        name: program
+        schema:
+          items:
+            type: integer
+          type: array
+        style: form
+      - description: A search term.
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: slug
+        schema:
+          type: string
+      - in: query
+        name: type
+        schema:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEventsList'
+          description: ''
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      tags:
+      - event
+  /2.2.0/event/{id}/:
+    get:
+      description: Single event
+      operationId: getEventId
+      parameters:
+      - description: Event Id
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Events'
+          description: ''
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      tags:
+      - event
+  /2.2.0/launch/:
+    get:
+      description: Launch List
+      operationId: getLaunch
+      parameters:
+      - description: Last Update is greater than or equal to
+        in: query
+        name: last_updated__gte
+        schema:
+          format: date-time
+          type: string
+      - description: Last Update is less than or equal to
+        in: query
+        name: last_updated__lte
+        schema:
+          format: date-time
+          type: string
+      - description: Number of results to return per page.
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+      - in: query
+        name: location_launch_attempt_count__gte
+        schema:
+          type: integer
+      - in: query
+        name: location_launch_attempt_count__lte
+        schema:
+          type: integer
+      - in: query
+        name: location_launch_attempt_count_year__gte
+        schema:
+          type: integer
+      - in: query
+        name: location_launch_attempt_count_year__lte
+        schema:
+          type: integer
+      - in: query
+        name: mission__orbit__name__icontains
+        schema:
+          type: string
+      - in: query
+        name: name
+        schema:
+          type: string
+      - description: offset
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+      - in: query
+        name: orbital_launch_attempt_count__gte
+        schema:
+          type: integer
+      - in: query
+        name: orbital_launch_attempt_count__lte
+        schema:
+          type: integer
+      - in: query
+        name: orbital_launch_attempt_count_year__gte
+        schema:
+          type: integer
+      - in: query
+        name: orbital_launch_attempt_count_year__lte
+        schema:
+          type: integer
+      - description: Which field to use when ordering the results.
+        in: query
+        name: ordering
+        required: false
+        schema:
+          type: string
+      - description: A search term.
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: slug
+        schema:
+          type: string
+      - in: query
+        name: status
+        schema:
+          maximum: 2147483647
+          minimum: -2147483648
+          type: integer
+      - description: Window End is greater than or equal to
+        in: query
+        name: window_end__gte
+        schema:
+          format: date-time
+          type: string
+      - description: Window End is less than or equal to
+        in: query
+        name: window_end__lte
+        schema:
+          format: date-time
+          type: string
+      - description: Window Start is greater than or equal to
+        in: query
+        name: window_start__gte
+        schema:
+          format: date-time
+          type: string
+      - description: Window Start is less than or equal to
+        in: query
+        name: window_start__lte
+        schema:
+          format: date-time
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLaunchSerializerCommonList'
+          description: ''
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      tags:
+      - launch
+  /2.2.0/launch/{id}/:
+    get:
+      description: Single launch
+      operationId: getLaunchId
+      parameters:
+      - description: Launch ID
+        in: path
+        name: id
+        required: true
+        schema:
+          format: uuid
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LaunchDetailed'
+          description: ''
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      tags:
+      - launch
+  /2.2.0/location/:
+    get:
+      description: Locations List
+      operationId: getLocation
+      parameters:
+      - in: query
+        name: country_code__contains
+        schema:
+          type: string
+      - in: query
+        name: id
+        schema:
+          type: integer
+      - description: limiy
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+      - in: query
+        name: name
+        schema:
+          type: string
+      - in: query
+        name: name__contains
+        schema:
+          type: string
+      - description: offset
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+      - description: search term.
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: total_landing_count__gte
+        schema:
+          type: integer
+      - in: query
+        name: total_landing_count__lte
+        schema:
+          type: integer
+      - in: query
+        name: total_launch_count__gte
+        schema:
+          type: integer
+      - in: query
+        name: total_launch_count__lte
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLocationList'
+          description: ''
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      tags:
+      - location
+  /2.2.0/location/{id}/:
+    get:
+      description: Location Id
+      operationId: getLocationId
+      parameters:
+      - description: Id
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationDetail'
+          description: ''
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      tags:
+      - location
+  /2.2.0/spacestation/:
+    get:
+      description: Spacestation List
+      operationId: getSpacestation
+      parameters:
+      - in: query
+        name: id
+        schema:
+          type: integer
+      - description: Limit results
+        in: query
+        name: limit
+        required: false
+        schema:
+          type: integer
+      - in: query
+        name: name
+        schema:
+          type: string
+      - in: query
+        name: name__contains
+        schema:
+          type: string
+      - description: Offset
+        in: query
+        name: offset
+        required: false
+        schema:
+          type: integer
+      - in: query
+        name: onboard_crew__gte
+        schema:
+          type: integer
+      - in: query
+        name: onboard_crew__lte
+        schema:
+          type: integer
+      - description: Ordering field
+        in: query
+        name: ordering
+        required: false
+        schema:
+          type: string
+      - description: search term.
+        in: query
+        name: search
+        required: false
+        schema:
+          type: string
+      - in: query
+        name: type
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedSpaceStationList'
+          description: ''
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      tags:
+      - spacestation
+  /2.2.0/spacestation/{id}/:
+    get:
+      description: Spacestations List
+      operationId: getSpacestationId
+      parameters:
+      - description: Spacestation Id
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SpaceStationDetailed'
+          description: ''
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      tags:
+      - spacestation
+servers:
+- url: https://lldev.thespacedevs.com
