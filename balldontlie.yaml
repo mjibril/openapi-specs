@@ -63,7 +63,7 @@ paths:
           content:
             application/json: {}
           description: Successful response
-      summary: Get information about NBA games
+      description: Get information about NBA games
       tags:
       - games
   /api/v1/games/{gameId}:
@@ -82,7 +82,7 @@ paths:
           content:
             application/json: {}
           description: Successful response
-      summary: Get information on a specific game
+      description: Get information on a specific game
       tags:
       - games
   /api/v1/players:
@@ -114,7 +114,7 @@ paths:
           content:
             application/json: {}
           description: Successful response
-      summary: Get information about players using search
+      description: Get information about players using search
       tags:
       - players
   /api/v1/players/{playerId}:
@@ -133,7 +133,7 @@ paths:
           content:
             application/json: {}
           description: Successful response
-      summary: Get information for a specific player
+      description: Get information for a specific player
       tags:
       - players
   /api/v1/season_averages:
@@ -159,7 +159,7 @@ paths:
           content:
             application/json: {}
           description: Successful response
-      summary: Get season averages
+      description: Get season averages
       tags:
       - stats
       - players
@@ -213,7 +213,7 @@ paths:
           content:
             application/json: {}
           description: Successful response
-      summary: Get player statistics based on query parameters
+      description: Get player statistics based on query parameters
       tags:
       - stats
   /api/v1/teams:
@@ -237,7 +237,7 @@ paths:
           content:
             application/json: {}
           description: Successful response
-      summary: Get information about teams
+      description: Get information about teams
       tags:
       - teams
   /api/v1/teams/{teamId}:
@@ -256,7 +256,7 @@ paths:
           content:
             application/json: {}
           description: Successful response
-      summary: Get information on a specific team
+      description: Get information on a specific team
       tags:
       - teams
 servers:

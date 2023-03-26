@@ -51,7 +51,7 @@ paths:
   /v3.1/all:
     get:
       operationId: getAllCountries
-      summary:  "Get a list of all the countries and their details. This includes all fields like population, timezones, currency, continents and others." 
+      description:  "Get a list of all the countries and their details. This includes all fields like population, timezones, currency, continents and others." 
       parameters:
         - name: fields
           in: query
@@ -69,7 +69,7 @@ paths:
     get:
       operationId: getByAlpha
 
-      summary:  "Search by cca2, ccn3, cca3 or cioc country code"
+      description:  "Search by cca2, ccn3, cca3 or cioc country code"
       parameters:
         - name: alphacode
           in: path
@@ -114,7 +114,7 @@ paths:
   /v3.1/currency/{currency}:
     get:
       operationId: getByCurrency
-      summary:  Find a country/countries using its/their currency code e.g usd, gbp
+      description:  Find a country/countries using its/their currency code e.g usd, gbp
       parameters:
         - name: currency
           in: path
@@ -137,7 +137,7 @@ paths:
   /v3.1/name/{name}:
     get:
       operationId: getByName
-      summary: Get a country by its name
+      description: Get a country by its name
       parameters:
         - name: name
           in: path
@@ -165,7 +165,7 @@ paths:
   /v3.1/capital/{capital}:
     get:
       operationId: getByCapital
-      summary: Get a country from its capital city/state
+      description: Get a country from its capital city/state
       parameters:
         - name: capital
           in: path
@@ -187,7 +187,7 @@ paths:
   /v3.1/region/{region}:
     get:
       operationId: getByContinent
-      summary: Get countries in a specific continent
+      description: Get countries in a specific continent
       parameters:
         - name: region
           in: path
@@ -210,7 +210,7 @@ paths:
   /v3.1/subregion/{subregion}:
     get:
       operationId: getBySubRegion
-      summary: Get countries in a subregion e.g Nothern Europe 
+      description: Get countries in a subregion e.g Nothern Europe 
       parameters:
         - name: subregion
           description: The name of the subregion
@@ -233,7 +233,7 @@ paths:
   /v3.1/lang/{lang}:
     get:
       operationId: getByLanguage
-      summary: Get a list of countries by language
+      description: Get a list of countries by language
       parameters:
         - name: lang
           description: the language e.g. spanish
@@ -256,7 +256,7 @@ paths:
   /v3.1/demonym/{demonym}:
     get:
       operationId: getByDemonym
-      summary:  Get country from demonym e.g. american
+      description:  Get country from demonym e.g. american
       parameters:
         - name: demonym
           in: path
