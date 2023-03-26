@@ -52,6 +52,7 @@ paths:
     get:
       operationId: getAllCountries
       description:  "Get a list of all the countries and their details. This includes all fields like population, timezones, currency, continents and others." 
+
       parameters:
         - name: fields
           in: query
@@ -115,6 +116,7 @@ paths:
     get:
       operationId: getByCurrency
       description:  Find a country/countries using its/their currency code e.g usd, gbp
+
       parameters:
         - name: currency
           in: path
@@ -137,6 +139,7 @@ paths:
   /v3.1/name/{name}:
     get:
       operationId: getByName
+
       description: Get a country by its name
       parameters:
         - name: name
