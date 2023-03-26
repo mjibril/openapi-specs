@@ -1,8 +1,9 @@
 openapi: 3.0.1
 info:
   title: Mathematics in Industry Reports Public API Documentation
-  description: This is the documentation for the Mathematics in Industry Reports public API.
+  description: This is the documentation for the Mathematics in Industry Reports public API.Mathematics in Industry Reports (MIIR) provides reports produced from numerous study groups with Industry that take place around the world. MIIR provides fully searchable, free access to these reports. 
   version: 0.0.84
+  
 servers:
   - url: https://www.cambridge.org/engage/miir
 paths:
@@ -29,10 +30,11 @@ paths:
   /public-api/v1/items:
     get:
       summary: Search items
-      description: Search for items passing search term and filters. In the QUERY PARAMETERS section you will find all parameters that you can add to query.
+      description: Search for items passing search term and filters.
       operationId: getPublicapiV1Items
       parameters:
         - name: term
+          description: the term to search
           in: query
           schema:
             type: string
@@ -140,26 +142,6 @@ paths:
             "*/*":
               schema:
                 $ref: "#/components/schemas/Model17"
-        400:
-          description: Bad request
-          content: {}
-        429:
-          description:
-            Too Many Requests, please throttle or talk to us if you think
-            there's a problem
-          content: {}
-  /public-api/v1/version:
-    get:
-      summary: Get API version
-      description: Information about current version of Open Engage Public API Documentation.
-      operationId: getPublicapiV1Version
-      responses:
-        200:
-          description: Success
-          content:
-            "*/*":
-              schema:
-                $ref: "#/components/schemas/Model18"
         400:
           description: Bad request
           content: {}
