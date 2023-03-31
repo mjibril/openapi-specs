@@ -184,7 +184,7 @@ paths:
           description: Successful response
 
       
-    /api/v1/stats:
+  /api/v1/stats:
     get:
       tags:
       - stats
@@ -248,13 +248,11 @@ paths:
         in: query
         name: season
         schema:
-          default: current_season
           type: integer
       - description: An array of player_ids
         in: query
         name: player_ids[]
         schema:
-          default: current_season
           items:
             type: integer
           type: array
