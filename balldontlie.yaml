@@ -1,5 +1,7 @@
 openapi: 3.0.0
 info:
+  description: Contains players, games and teams data from the National Basket Ball
+    Association (NBA). Data is available from seasons 1979 to current date. per_page field refers to the number of results to return per page and page field refers to the specific page number. 
   title: balldontlie
   version: 1.0.0
 servers:
@@ -13,242 +15,251 @@ paths:
   /api/v1/players:
     get:
       tags:
-        - players
-      summary: all players (search)
+      - players
+      description: Get information about players using search
+      operationId: getPlayers
       parameters:
-        - name: search
-          in: query
-          schema:
-            type: string
-          example: lebron
-          description: Used to filter players based on their name. For example, ?search=davis will return players that have 'davis' in their first or last name.
-        - name: page
-          in: query
-          schema:
-            type: integer
-            default: 0
-          description: The page number, used for pagination.
-        - name: per_page
-          in: query
-          schema:
-            type: integer
-            default: 25
-          description: The number of results returned per call, used for pagination. Max 100.
+      - description: Used to filter players based on their name. For example, ?search=davis
+          will return players that have 'davis' in their first or last name.
+        example: lebron
+        in: query
+        name: search
+        schema:
+          type: string
+      - in: query
+        name: page
+        schema:
+          default: 0
+          type: integer
+      - in: query
+        name: per_page
+        schema:
+          default: 25
+          type: integer
       responses:
         '200':
-          description: Successful response
           content:
             application/json: {}
+          description: Successful response
+
   /api/v1/players/{playerId}:
     get:
       tags:
-        - players
-      summary: specific player
+      - players
+      description: Get information for a specific player
+      operationId: getPlayersById
       parameters:
-        - name: playerId
-          in: path
-          required: true
-          description: The ID of the player to retrieve
-          schema:
-            type: integer
-          example: 123
+      - description: The ID of the player to retrieve
+        example: 123
+        in: path
+        name: playerId
+        required: true
+        schema:
+          type: integer
       responses:
         '200':
-          description: Successful response
           content:
             application/json: {}
+          description: Successful response
+
   /api/v1/teams:
     get:
       tags:
-        - teams
-      summary: all teams
+      - teams
+      description: Get information about teams
+      operationId: getTeams
       parameters:
-        - name: page
-          in: query
-          schema:
-            type: integer
-            default: 0
-          description: The page number, used for pagination.
-        - name: per_page
-          in: query
-          schema:
-            type: integer
-            default: 10
-          description: The number of results returned per call, used for pagination.
+      - in: query
+        name: page
+        schema:
+          default: 0
+          type: integer
+      - in: query
+        name: per_page
+        schema:
+          default: 10
+          type: integer
       responses:
         '200':
-          description: Successful response
           content:
             application/json: {}
+          description: Successful response
+      
   /api/v1/teams/{teamId}:
     get:
       tags:
-        - teams
-      summary: specific team
+      - teams
+
+      description: Get information on a specific team
+      operationId: getTeamsById
       parameters:
-        - name: teamId
-          in: path
-          required: true
-          schema:
-            type: integer
-            default: 123
-          description: The ID of the team to retrieve
+      - description: The ID of the team to retrieve
+        in: path
+        name: teamId
+        required: true
+        schema:
+          default: 123
+          type: integer
       responses:
         '200':
-          description: Successful response
           content:
             application/json: {}
+          description: Successful response
   /api/v1/games:
     get:
       tags:
-        - games
-      summary: all games (example parameters)
+      - games
+      description: Get information about NBA games
+      operationId: getGames
       parameters:
-        - name: seasons[]
-          in: query
-          schema:
-            type: array
-            items: 
-              type: integer
-          description: An array of seasons
-          example: '2018'
-        - name: team_ids[]
-          in: query
-          schema:
-            type: array
-            items: 
-              type: integer
-          example: '1'
-        - name: dates[]
-          in: query
-          schema:
-            type: array
-            items: 
-              type: string
-          description: An array of dates formatted in 'YYYY-MM-DD'
-        - name: start_date
-          in: query
-          schema: 
-            type: array
-            items: 
-              type: string
-          description: A single date in 'YYYY-MM-DD' format. This is used to select games that occur on or after this date.
-        - name: end_date
-          in: query
-          schema: 
+      - description: An array of seasons
+        example: '2018'
+        in: query
+        name: seasons[]
+        schema:
+          items:
+            type: integer
+          type: array
+      - example: '1'
+        in: query
+        name: team_ids[]
+        schema:
+          items:
+            type: integer
+          type: array
+      - description: An array of dates formatted in 'YYYY-MM-DD'
+        in: query
+        name: dates[]
+        schema:
+          items:
             type: string
-          description: A single date in 'YYYY-MM-DD' format. This is used to select games that occur on or before this date.
-        - name: page
-          in: query
-          schema:
-            type: integer
-            default: 0
-          description: The page number, used for pagination.
-        - name: per_page
-          in: query
-          schema:
-            type: integer
-            default: 25
-          description: The number of results returned per call, used for pagination. Max 100.
-
+          type: array
+      - description: A single date in 'YYYY-MM-DD' format. This is used to select
+          games that occur on or after this date.
+        in: query
+        name: start_date
+        schema:
+          items:
+            type: string
+          type: array
+      - description: A single date in 'YYYY-MM-DD' format. This is used to select
+          games that occur on or before this date.
+        in: query
+        name: end_date
+        schema:
+          type: string
+      - in: query
+        name: page
+        schema:
+          default: 0
+          type: integer
+      - in: query
+        name: per_page
+        schema:
+          default: 25
+          type: integer
       responses:
         '200':
-          description: Successful response
           content:
             application/json: {}
+          description: Successful response
   /api/v1/games/{gameId}:
     get:
       tags:
-        - games
-      summary: specific game
+      - games
+      description: Get information on a specific game
+      operationId: getGamesById
       parameters:
-        - name: gameId
-          in: path
-          required: true
-          description: The ID of the game to retrieve
-          schema:
-            type: integer
-          example: 123
+      - description: The ID of the game to retrieve
+        example: 123
+        in: path
+        name: gameId
+        required: true
+        schema:
+          type: integer
       responses:
         '200':
-          description: Successful response
           content:
             application/json: {}
+          description: Successful response
+
+      
   /api/v1/stats:
     get:
       tags:
-        - stats
-      summary: all stats (example parameters)
+      - stats
+      description: Get player statistics based on query parameters
+      operationId: getStats
       parameters:
-        - name: seasons[]
-          in: query
-          schema:
-            type: array
-            items: 
-              type: integer 
-          example: '2018'
-        - name: player_ids[]
-          in: query
-          schema:
-            type: array
-            items: 
-              type: integer
-          example: '1'
-        - name: dates[]
-          in: query
-          schema:
-            type: array
-            items: 
-              type: string
-        - name: start_date
-          in: query
-          schema: 
-            type: string
-        - name: end_date
-          in: query
-          schema: 
-            type: string
-        - name: page
-          in: query
-          schema:
+      - example: '2018'
+        in: query
+        name: seasons[]
+        schema:
+          items:
             type: integer
-            default: 0
-          description: The page number, used for pagination.
-        - name: per_page
-          in: query
-          schema:
+          type: array
+      - example: '1'
+        in: query
+        name: player_ids[]
+        schema:
+          items:
             type: integer
-            default: 25
-          description: The number of results returned per call, used for pagination. Max 100.
+          type: array
+      - in: query
+        name: dates[]
+        schema:
+          items:
+            type: string
+          type: array
+      - in: query
+        name: start_date
+        schema:
+          type: string
+      - in: query
+        name: end_date
+        schema:
+          type: string
+      - in: query
+        name: page
+        schema:
+          default: 0
+          type: integer
+      - in: query
+        name: per_page
+        schema:
+          default: 25
+          type: integer
       responses:
         '200':
-          description: Successful response
           content:
             application/json: {}
-  
+          description: Successful response
+
+      
   /api/v1/season_averages:
     get:
-      tags: 
+      tags:
       - stats
       - players
-      summary: get season averages
+      description: Get season averages
+      operationId: getSeasonAverages
       parameters:
-        - name: season
-          in: query
-          schema:
+      - description: A single season
+        in: query
+        name: season
+        schema:
+          default: current_season
+          type: integer
+      - description: An array of player_ids
+        in: query
+        name: player_ids[]
+        schema:
+          items:
             type: integer
-            default: current_season
-          description: A single season
-        - name: player_ids[]
-          in: query
-          schema:
-            type: array
-            items: 
-              type: integer
-            default: current_season
-          description: An array of player_ids
+          type: array
       responses:
-          '200':
-            description: Successful response
-            content:
-              application/json: {}
+        '200':
+          content:
+            application/json: {}
+          description: Successful response
+

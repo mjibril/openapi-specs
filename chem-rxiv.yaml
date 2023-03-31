@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: ChemRxiv Public API Documentation
-  description: This is the documentation for the ChemRxiv public API
+  description: ChemRxiv  is a free submission, distribution, and archive service for unpublished preprints in chemistry and related areas. The API enables searching the archive and retrieving articles. 
   version: 0.0.84
 servers:
   - url: 'https://chemrxiv.org/engage/chemrxiv'
@@ -32,14 +32,14 @@ paths:
   /public-api/v1/items:
     get:
       summary: Search items
-      description: |2-
-            Search for items passing search term and filters. In the QUERY PARAMETERS section you will find all parameters that you can add to query.
+      description: |-
+            Search for items passing search term and filters.
             
             Example of Query with parameters
             
-            1. /public-api/v1/items?term="water flow"&searchDateFrom=2020-01-01T00:00:00.000Z
-            2. /public-api/v1/items?sort=VIEWS_COUNT_DESC&limit=5
-            3. /public-api/v1/items?subjectIds=123456
+            1. { "term":"water flow","searchDateFrom" : "2020-01-01T00:00:00.000Z"}
+            2. {"sort" : "VIEWS_COUNT_DESC", "limit" : 5}
+            3. { "subjectIds" : 123456}
       operationId: getPublicapiV1Items
       parameters:
         - name: term
@@ -170,13 +170,10 @@ paths:
         - public-api/v1/items
       summary: Get item metadata
       description: |-
-
-        <div>
-            View the metadata for an item by passing its unique item id.
-            <h3>Example of Query with parameters</h3>
-            <pre><span class="http-get">get</span><code>/public-api/v1/items?itemId=123456</code></pre>
-            <span />
-        </div>
+          View the metadata for an item by passing its unique item id.
+          Example of Query with parameters
+          {"itemId" : 123456}
+      
       operationId: getPublicapiV1ItemsItemid
       parameters:
         - name: itemId
