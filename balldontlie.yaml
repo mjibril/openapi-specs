@@ -248,6 +248,7 @@ paths:
         in: query
         name: season
         schema:
+          default: current_season
           type: integer
       - description: An array of player_ids
         in: query
