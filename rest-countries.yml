@@ -282,7 +282,7 @@ paths:
   /v3.1/translation/{translation}:
     get:
       operationId: getByTranslation
-      summary : Get a country by its translated name e.g.  alemania for germany
+      description: Get a country by its translated name e.g.  alemania for germany
       parameters:
         - name: translation
           in: path
