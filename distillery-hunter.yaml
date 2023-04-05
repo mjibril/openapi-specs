@@ -1,0 +1,47 @@
+openapi: 3.0.1
+info:
+  title: Distillery Hunter
+  description: Access data from for distilleries and online whisky auctions
+  termsOfService: /privacy-policy/
+  version: v1
+servers:
+- url: https://whiskyhunter.net/api
+paths:
+  /auctions_info:
+    get:
+      tags:
+      - auctions_info
+      description: Obtain a list of all online auctions, including buyer's fee, seller's
+        fee, and listing fee.
+      operationId: fetchAuctionsInformation
+      responses:
+        200:
+          description: ""
+          content: {}
+  /distilleries_info/:
+    get:
+      tags:
+      - distilleries_info
+      description: Retrieve a list of all distilleries, including their country and
+        rating.
+      operationId: fetchDistilleriesInformation
+      responses:
+        200:
+          description: ""
+          content: {}
+  /distillery_data/{slug}/:
+    get:
+      tags:
+      - distillery_data
+      description: Obtain auction data for a specific distillery.
+      operationId: fetchDistilleryData
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: ""
+          content: {}
