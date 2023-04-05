@@ -115,7 +115,7 @@ paths:
   /v3.1/currency/{currency}:
     get:
       operationId: getByCurrency
-      description:  Find a country/countries that use a common currency using the currency code e.g. gbp, usd
+      description:  Find a country/countries that use a common currency using the ISO 4217 currency code e.g. gbp, usd
       parameters:
         - name: currency
           in: path
@@ -138,8 +138,6 @@ paths:
   /v3.1/name/{name}:
     get:
       operationId: getByName
-
-
       description: Get a country by its name e.g France
       parameters:
         - name: name
@@ -189,15 +187,21 @@ paths:
                 $ref: '#/components/schemas/RestCountries'
   /v3.1/region/{region}:
     get:
-      operationId: getByContinent
-      description: Get countries in a specific continent/region e.g Europe
+      operationId: getByRegion
+      description: Get countries in a specific region e.g Europe
       parameters:
         - name: region
           in: path
           required: true
-          description: Continent name 
+          description: Region name 
           schema:
             type: string
+            enum:
+            - Africa
+            - Americas
+            - Asia
+            - Europe
+            - Oceania
         - name: fields
           in: query
           description: list of comma separated fields to return
@@ -205,7 +209,7 @@ paths:
             type: string
       responses:
         default:
-          description: getByContinent default response
+          description: getByRegion default response
           content:
             application/json:
               schema:
@@ -236,8 +240,7 @@ paths:
   /v3.1/lang/{lang}:
     get:
       operationId: getByLanguage
-      description: Get a list of countries by language code or language name
-
+      description: Get a list of countries by ISO 639-1 language code or language name
       parameters:
         - name: lang
           description: the language e.g. spanish or spa
