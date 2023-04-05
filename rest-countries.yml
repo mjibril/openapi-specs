@@ -69,7 +69,6 @@ paths:
   /v3.1/alpha/{alphacode}:
     get:
       operationId: getByAlpha
-
       description:  "Search by cca2, ccn3, cca3 or cioc country code. Example US."
       parameters:
         - name: alphacode
@@ -139,6 +138,7 @@ paths:
   /v3.1/name/{name}:
     get:
       operationId: getByName
+
 
       description: Get a country by its name e.g France
       parameters:
@@ -237,6 +237,7 @@ paths:
     get:
       operationId: getByLanguage
       description: Get a list of countries by language code or language name
+
       parameters:
         - name: lang
           description: the language e.g. spanish or spa

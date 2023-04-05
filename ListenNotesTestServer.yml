@@ -37,8 +37,7 @@ paths:
         You can get the genre ids from `GET /genres` endpoint.
       operationId: getBestPodcasts
       parameters:
-        
-        - description: You can get the id from `GET /genres`. If not specified, it'll be the overall best podcasts, which can be considered as a special genre.
+        - description: If not specified, it'll be the overall best podcasts, which can be considered as a special genre.
           explode: true
           in: query
           name: genre_id
@@ -56,10 +55,7 @@ paths:
             example: 2
             type: integer
           style: form
-        - description: Filter best podcasts by country/region.
-            Please note that podcasts that are "best" in a country/region may not be produced in that country/region.
-            You can get the supported country codes (e.g., us, jp, gb...) from `GET /regions`.
-            If not specified, you'll get "best podcasts" in United States.
+        - description: If not specified, you'll get "best podcasts" in United States.
           explode: true
           in: query
           name: region
@@ -69,9 +65,7 @@ paths:
             example: us
             type: string
           style: form
-        - description: Filter best podcasts by the publisher's country/region.
-            This is to narrow down the results to include "best podcasts" Get the supported country codes (e.g., us, jp, gb...) from `GET /regions`.
-            If not specified, you'll get "best podcasts" produced in any country/region.
+        - description: If not specified, you'll get "best podcasts" produced in any country/region.
           explode: true
           in: query
           name: publisher_region
@@ -79,8 +73,7 @@ paths:
           schema:
             type: string
           style: form
-        - description: You can get a list of supported languages (e.g., English, Chinese, Japanese...) from `GET /languages`.
-            If not specified, you'll get "best podcasts" in any language.
+        - description: If not specified, you'll get "best podcasts" in any language.
           explode: true
           in: query
           name: language
@@ -123,9 +116,8 @@ paths:
         Get a list of podcast genres that are supported in Listen Notes.
       operationId: getGenres
       parameters:
-        
         - description: |
-            Just show top level genres? If 1, yes, just show top level genres. If 0, no, show all genres.
+            Just show top level genres?
           explode: true
           in: query
           name: top_level_only
@@ -161,7 +153,7 @@ paths:
         - Directory API
   /just_listen:
     get:
-      description: Recently published episodes are more likely to be fetched. Good luck!
+      description: Returns a random podcast episode. Recently published episodes are more likely to be fetched.
       operationId: justListen
       responses:
         "200":
@@ -213,7 +205,7 @@ paths:
   /regions:
     get:
       description: |
-        It returns a dictionary of country codes (e.g., us, gb...) & country names (United States, United Kingdom...).
+        Returns a dictionary of country codes (e.g., us, gb...) & country names (United States, United Kingdom...).
       operationId: getRegions
       responses:
         "200":
@@ -242,7 +234,6 @@ paths:
         Full-text search on episodes, podcasts, or curated lists of podcasts.
       operationId: search
       parameters:
-        
         - description: Search term, e.g., person, place, topic... You can use double quotes to do verbatim match, e.g., "game of thrones". Otherwise, it's fuzzy search.
           explode: true
           in: query
@@ -309,7 +300,7 @@ paths:
             type: string
           style: form
         - description: |
-            Limit search results to a specific language. If not specified, it'll be any language. You can get a list of supported languages from `GET /languages`. It works only when **type** is *episode* or *podcast*.
+            Limit search results to a specific language. If not specified, it'll be any language. It works only when **type** is *episode* or *podcast*.
           explode: true
           in: query
           name: language
@@ -319,7 +310,7 @@ paths:
             type: string
           style: form
         - description: |
-            Limit search results to a specific region (e.g., us, gb, in...). If not specified, it'll be any region. You can get the supported country codes from `GET /regions`. It works only when **type** is *episode* or *podcast*.
+            Limit search results to a specific region (e.g., us, gb, in...). If not specified, it'll be any region. It works only when **type** is *episode* or *podcast*.
           explode: true
           in: query
           name: region
