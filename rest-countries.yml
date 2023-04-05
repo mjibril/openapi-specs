@@ -4,7 +4,7 @@ servers:
 info:
   title: rest-countries
   description: |
-    Get information about countries via a RESTful API. Available fields that are returned include are listed below. If using multiple fields, pass as comma-separated string in the fields , for example name,status,continents <br><br>
+    Get information about countries via a RESTful API. Countries information is returned with the fields below. You can choose which fields are returned by passing a comma-separated string in the fields. for example "name,status,continents"
     1. name
     2. tld
     3. cca2
@@ -70,7 +70,7 @@ paths:
     get:
       operationId: getByAlpha
 
-      description:  "Search by cca2, ccn3, cca3 or cioc country code"
+      description:  "Search by cca2, ccn3, cca3 or cioc country code. Example US."
       parameters:
         - name: alphacode
           in: path
@@ -93,6 +93,7 @@ paths:
   /v3.1/alpha/:
     get:
       operationId: getByAlphaList
+      description: Get a list of one or more countries using their country codes
       parameters:
         - name: codes
           in: query
@@ -115,8 +116,7 @@ paths:
   /v3.1/currency/{currency}:
     get:
       operationId: getByCurrency
-      description:  Find a country/countries using its/their currency code e.g usd, gbp
-
+      description:  Find a country/countries that use a common currency using the currency code e.g. gbp, usd
       parameters:
         - name: currency
           in: path
@@ -140,7 +140,7 @@ paths:
     get:
       operationId: getByName
 
-      description: Get a country by its name
+      description: Get a country by its name e.g France
       parameters:
         - name: name
           in: path
@@ -168,7 +168,7 @@ paths:
   /v3.1/capital/{capital}:
     get:
       operationId: getByCapital
-      description: Get a country from its capital city/state
+      description: Get a country by its capital city/state
       parameters:
         - name: capital
           in: path
@@ -190,7 +190,7 @@ paths:
   /v3.1/region/{region}:
     get:
       operationId: getByContinent
-      description: Get countries in a specific continent
+      description: Get countries in a specific continent/region e.g Europe
       parameters:
         - name: region
           in: path
@@ -236,10 +236,10 @@ paths:
   /v3.1/lang/{lang}:
     get:
       operationId: getByLanguage
-      description: Get a list of countries by language
+      description: Get a list of countries by language code or language name
       parameters:
         - name: lang
-          description: the language e.g. spanish
+          description: the language e.g. spanish or spa
           in: path
           required: true
           schema:
@@ -259,7 +259,7 @@ paths:
   /v3.1/demonym/{demonym}:
     get:
       operationId: getByDemonym
-      description:  Get country from demonym e.g. american
+      description:  Get country from demonym e.g. american, french
       parameters:
         - name: demonym
           in: path
@@ -305,6 +305,7 @@ paths:
   /v3.1/independent:
     get:
       operationId: getIndependentCountries
+      description: Get a list of all independent countries
       parameters:
         - name: status
           in: query
