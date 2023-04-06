@@ -1,0 +1,38 @@
+openapi: 3.0.1
+info:
+  title: Agify API
+  description: API that predicts Age based on name and/or region
+  version: "1"
+servers:
+  - url: https://api.agify.io
+paths:
+  /:
+    get:
+      operationId: predictAge
+      description: Send a name as the name parameter to predict the age, also can use country_id to improve accuracy with localization, the api follows ISO 3166-1 alpha 2 for country codes
+      parameters:
+        - name: name
+          in: query
+          required: true
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: michael
+        - name: country_id
+          in: query
+          required: false
+          style: form
+          explode: true
+          schema:
+            type: string
+          example: US
+      responses:
+        "200":
+          description: Age Number prediction given the input to the API
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: string
+              examples: {}
+components: {}
