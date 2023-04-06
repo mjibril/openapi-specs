@@ -1,0 +1,108 @@
+openapi: 3.0.0
+info:
+  title: Open Authors - API
+  description: >-
+    Open Books has a RESTful API, best used to link into Open Library data in
+    JSON, YAML and RDF/XML.
+    Work metadata will include general umbrella information about a book, whereas an Edition will have a publisher, an ISBN, a book-jacket, and other specific information.
+    Only limited to Authors.
+  version: 1.0.0
+servers:
+  - url: https://openlibrary.org
+paths:
+  /search/authors.json:
+    get:
+      operationId: OpenAuthorsSearch
+      tags:
+        - author
+        - search
+      summary:
+        Search for Authors based on given parameters.
+      parameters:
+        - name: q
+          in: query
+          required: False
+          schema: 
+            type: string
+          example: J K Rowling
+        - name: fields
+          in: query
+          required: False
+          schema: 
+            type: string
+          example: key,name,birth_date,top_work,work_count,top_subjects,alternate_names
+          description: fields to be fetched, separated by comma. Example - "key,name,birth_date,top_work,work_count,top_subjects,alternate_names"
+        - name: "limit"
+          in: query
+          schema:
+            type: integer
+            default: 1000
+            example: 2
+          description: Number of items to fetch
+        - name: offset
+          in: query
+          schema:
+            type: integer
+            default: 0
+            example: 0
+          description: Offset search query by these many items.
+      responses:
+        '200' :
+          description: OK
+  
+  /authors/{authorKey}.json:
+    get:
+      operationId: OpenAuthorGetByAuthorKey
+      tags:
+        - author
+      summary:
+        Description for an Author.
+      description:
+        Get the description for an Author.
+      parameters:
+        - name: authorKey
+          in: path
+          required: True
+          schema: 
+            type: string
+          example: OL26320A
+      responses:
+        '200' :
+          description: OK
+
+  /authors/{authorKey}/works.json:
+    get:
+      operationId: OpenAuthorGetWorksByAuthorKey
+      tags:
+        - author
+      summary:
+        Description for an Authors.
+      description:
+        Get works of a particular author.
+      parameters:
+        - name: authorKey
+          in: path
+          required: True
+          schema: 
+            type: string
+          example: OL26320A
+        - name: "limit"
+          in: query
+          required: False
+          schema:
+            type: integer
+            default: 50
+            example: 2
+          description: Number of items to fetch
+        - name: offset
+          in: query
+          required: False
+          schema:
+            type: integer
+            default: 0
+            example: 0
+          description: Offset search query by these many items.
+          
+      responses:
+        '200' :
+          description: OK
