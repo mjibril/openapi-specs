@@ -2939,7 +2939,7 @@ info:
   contact:
     email: support@thespacedevs.com
     name: The Space Devs
-  description: "Includes information on space launches, agencies, space stations, astranauts and launch locations. Some query fields end with _lte and _gte indicating that the fields can be used to query for the minimum and maximum values (inclusive). limit fields are used to limit the number of results returned. ordering fields can be passed the name of the field to order the returned results by."
+  description: "Includes information on space launches, agencies, space stations, astranauts and launch locations. Some query fields end with _lte and _gte indicating that the fields can be used to query for the minimum and maximum values (inclusive). limit fields are used to limit the number of results returned. The total count of results matching the query is returned in the response when limit field is used. ordering fields can be passed the name of the field to order the returned results by."
   license:
     name: Apache License 2.0
   title: Launch Library
