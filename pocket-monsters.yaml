@@ -1,0 +1,770 @@
+openapi: 3.0.3
+info:
+  title: Pocket Monsters API
+  description: |-
+    The Pocket monsters API provides information related to Pokemons! You can find information like pokemons, abilities, characteristics, language and more. 
+
+  contact:
+    email: rauber@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 2.0.4
+externalDocs:
+  description: API Docs
+  url: 'https://pokeapi.co/docs/v2'
+servers:
+  - url: 'https://pokeapi.co/api/v2'
+tags:
+  - name: pokemon
+  - name: utility
+paths:
+  '/ability/{id_or_name}/':
+    get:
+      tags:
+        - pokemon
+      summary: Ability Information
+      description: >-
+        Abilities provide passive effects for Pokémon in battle or in the overworld. Pokémon have multiple possible abilities but can have only one ability at a time.
+      operationId: getPokemonAbilitiesByIdOrName
+      parameters:
+        - name: id_or_name
+          in: path
+          description: ID or name of an ability
+          required: true
+          schema:
+            type: string
+            example: stench
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  is_main_series:
+                    type: boolean
+                  generation:
+                    $ref: '#/components/schemas/NamedAPIResource'
+                  names:
+                    $ref: '#/components/schemas/ArrayOfNames'
+                  effect_entries:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/VerboseEffect'
+                  effect_changes:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AbilityEffectChange'
+                  flavor_text_entries:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AbilityFlavorText'
+                  pokemon:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AbilityPokemon'
+  '/nature/{id_or_name}/':
+    get:
+      tags:
+        - pokemon
+      summary: Nature Information
+      description: Nature influence how a Pokémon's stats grow.
+      operationId: getPokemonNatureByIdOrName
+      parameters:
+        - name: id_or_name
+          in: path
+          description: ID or name of a nature
+          required: true
+          schema:
+            type: string
+            example: bold
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  decreased_stat:
+                    $ref: '#/components/schemas/NamedAPIResource'
+                  increased_stat:
+                    $ref: '#/components/schemas/NamedAPIResource'
+                  hates_flavor:
+                    $ref: '#/components/schemas/NamedAPIResource'
+                  likes_flavor:
+                    $ref: '#/components/schemas/NamedAPIResource'
+                  pokeathlon_stat_changes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        max_change:
+                          type: integer
+                        pokeathlon_stat:
+                          $ref: '#/components/schemas/NamedAPIResource'
+                  move_battle_style_preferences:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        low_hp_preference:
+                          type: integer
+                        high_hp_preference:
+                          type: integer
+                        move_battle_style:
+                          $ref: '#/components/schemas/NamedAPIResource'
+                  names:
+                    $ref: '#/components/schemas/ArrayOfNames'
+  '/pokemon/{id_or_name}/':
+    get:
+      tags:
+        - pokemon
+      summary: Pokemon Information
+      description: >-
+        Pokémon are the creatures that inhabit the world of the Pokémon games. Information such as base stats, available abilities and typings.
+      operationId: getPokemonInformation
+      parameters:
+        - name: id_or_name
+          in: path
+          description: ID or name of a pokemon
+          required: true
+          schema:
+            type: string
+            example: clefairy
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  base_experience:
+                    type: integer
+                  height:
+                    type: integer
+                  is_default:
+                    type: boolean
+                  order:
+                    type: integer
+                  weight:
+                    type: integer
+                  abilities:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PokemonAbility'
+                  forms:
+                    $ref: '#/components/schemas/ArrayOfNamedAPIResources'
+                  game_indices:
+                    $ref: '#/components/schemas/ArrayOfGenerationGameIndex'
+                  held_items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PokemonHeldItem'
+                  location_area_encounters:
+                    type: string
+                  moves:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PokemonMove'
+                  past_types:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PokemonTypePast'
+                  sprites:
+                    $ref: '#/components/schemas/PokemonSprites'
+                  species:
+                    $ref: '#/components/schemas/NamedAPIResource'
+                  stats:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PokemonStat'
+                  types:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PokemonType'
+  '/pokemon/{id_or_name}/encounters':
+    get:
+      tags:
+        - pokemon
+      summary: Pokemon Location Area Information
+      description: Pokémon encounters areas are areas where Pokémon can be found.
+      operationId: getPokemonEncounterAreaByIdOrName
+      parameters:
+        - name: id_or_name
+          in: path
+          description: ID or name of a pokemon
+          required: true
+          schema:
+            type: string
+            example: clefairy
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location_area:
+                    $ref: '#/components/schemas/NamedAPIResource'
+                  version_details:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/VersionEncounterDetail'
+  '/pokemon-color/{id_or_name}/':
+    get:
+      tags:
+        - pokemon
+      summary: Pokemon Color Information
+      description: >-
+        Get colors related to pokemon
+      operationId: getPokemonByColorIdOrName
+      parameters:
+        - name: id_or_name
+          in: path
+          description: ID or name of a pokemon color
+          required: true
+          schema:
+            type: string
+            example: black
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  names:
+                    $ref: '#/components/schemas/ArrayOfNames'
+                  pokemon_species:
+                    $ref: '#/components/schemas/ArrayOfNamedAPIResources'
+  
+  '/pokemon-habitat/{id_or_name}/':
+    get:
+      tags:
+        - pokemon
+      summary: Pokemon Habitat Information
+      description: >-
+        Habitats are generally different terrain Pokémon can be found in but can also be areas designated for rare or legendary Pokémon.
+      operationId: getPokemonHabitatByIdOrName
+      parameters:
+        - name: id_or_name
+          in: path
+          description: ID or name of a pokemon Habitat
+          required: true
+          schema:
+            type: string
+            example: cave
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  names:
+                    $ref: '#/components/schemas/ArrayOfNames'
+                  pokemon_species:
+                    $ref: '#/components/schemas/ArrayOfNamedAPIResources'
+  '/pokemon-shape/{id_or_name}/':
+    get:
+      tags:
+        - pokemon
+      summary: Pokemon Shape Information
+      description: Shapes used for sorting Pokémon in a Pokédex.
+      operationId: getPokemonShapeByIdOrName
+      parameters:
+        - name: id_or_name
+          in: path
+          description: ID or name of a pokemon shape
+          required: true
+          schema:
+            type: string
+            example: ball
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  awesome_names:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AwesomeName'
+                  names:
+                    $ref: '#/components/schemas/ArrayOfNames'
+                  pokemon_species:
+                    $ref: '#/components/schemas/ArrayOfNamedAPIResources'
+  '/type/{id_or_name}/':
+    get:
+      tags:
+        - pokemon
+      summary: Type Information
+      description: >-
+        Types are properties for Pokémon and their moves. Each type has three
+        properties: which types of Pokémon it is super effective against, which
+        types of Pokémon it is not very effective against, and which types of
+        Pokémon it is completely ineffective against.
+      operationId: getPokemonTypeByIdOrName
+      parameters:
+        - name: id_or_name
+          in: path
+          description: ID or name of a type
+          required: true
+          schema:
+            type: string
+            example: ground
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Type'
+  '/language/{id_or_name}/':
+    get:
+      tags:
+        - utility
+      summary: Language Information
+      description: Languages for translations of API resource information.
+      operationId: getLanguagesForAPI
+      parameters:
+        - name: id_or_name
+          in: path
+          description: ID or name of a language
+          required: true
+          schema:
+            type: string
+            example: '1'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Language'
+  '/{resource}':
+    get:
+      tags:
+        - resource
+      summary: Get a list of a particular resource to use in other endpoints
+      description: >-
+        Get a list of a particular resource to use in other endpoints. For example, get a list of abilities. 
+      operationId: getAllInformation
+      parameters:
+        - name: resource
+          in: path
+          description: Resource to retrieve
+          required: true
+          schema:
+            type: string
+            enum:
+              - ability
+              - type
+              - language
+              - pokemon-habitat
+              - pokemon-shape
+              - pokemon-color
+              - pokemon
+              - nature
+              - characteristics
+          example: ability
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResourceWithNameURL'
+
+
+components:
+  schemas:
+    AbilityEffectChange:
+      type: object
+      properties:
+        effect_entries:
+          type: array
+          items:
+            type: object
+            properties:
+              effect:
+                type: string
+              language:
+                $ref: '#/components/schemas/NamedAPIResource'
+    AbilityFlavorText:
+      type: object
+      properties:
+        flavor_text:
+          type: string
+        language:
+          $ref: '#/components/schemas/NamedAPIResource'
+        version_group:
+          $ref: '#/components/schemas/NamedAPIResource'
+    AbilityPokemon:
+      type: object
+      properties:
+        is_hidden:
+          type: boolean
+        slot:
+          type: integer
+        pokemon:
+          $ref: '#/components/schemas/NamedAPIResource'
+    ArrayOfChainLinks:
+      type: array
+      items:
+        $ref: '#/components/schemas/ChainLink'
+    ArrayOfDescriptions:
+      type: array
+      items:
+        $ref: '#/components/schemas/Description'
+    ArrayOfGenerationGameIndex:
+      type: array
+      items:
+        $ref: '#/components/schemas/GenerationGameIndex'
+    ArrayOfNames:
+      type: array
+      items:
+        $ref: '#/components/schemas/Name'
+    ArrayOfNamedAPIResources:
+      type: array
+      items:
+        $ref: '#/components/schemas/NamedAPIResource'
+    AwesomeName:
+      type: object
+      properties:
+        awesome_name:
+          type: string
+        language:
+          $ref: '#/components/schemas/NamedAPIResource'
+    ChainLink:
+      type: object
+      properties:
+        is_baby:
+          type: boolean
+        species:
+          $ref: '#/components/schemas/NamedAPIResource'
+        evolution_details:
+          type: array
+          items:
+            $ref: '#/components/schemas/EvolutionDetail'
+        evolves_to:
+          $ref: '#/components/schemas/ArrayOfChainLinks'
+    Description:
+      type: object
+      properties:
+        description:
+          type: string
+        language:
+          $ref: '#/components/schemas/NamedAPIResource'
+    Encounter:
+      type: object
+      properties:
+        min_level:
+          type: integer
+        max_level:
+          type: integer
+        condition_values:
+          $ref: '#/components/schemas/ArrayOfNamedAPIResources'
+        chance:
+          type: integer
+        method:
+          $ref: '#/components/schemas/NamedAPIResource'
+    EvolutionDetail:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/NamedAPIResource'
+        trigger:
+          $ref: '#/components/schemas/NamedAPIResource'
+        gender:
+          type: integer
+        held_item:
+          $ref: '#/components/schemas/NamedAPIResource'
+        known_move:
+          $ref: '#/components/schemas/NamedAPIResource'
+        known_move_type:
+          $ref: '#/components/schemas/NamedAPIResource'
+        location:
+          $ref: '#/components/schemas/NamedAPIResource'
+        min_level:
+          type: integer
+        min_happiness:
+          type: integer
+        min_beauty:
+          type: integer
+        min_affection:
+          type: integer
+        needs_overworld_rain:
+          type: boolean
+        party_species:
+          $ref: '#/components/schemas/NamedAPIResource'
+        party_type:
+          $ref: '#/components/schemas/NamedAPIResource'
+        relative_physical_stats:
+          type: integer
+        time_of_day:
+          type: string
+        trade_species:
+          $ref: '#/components/schemas/NamedAPIResource'
+        turn_upside_down:
+          type: boolean
+    GenerationGameIndex:
+      type: object
+      properties:
+        game_index:
+          type: integer
+        generation:
+          $ref: '#/components/schemas/NamedAPIResource'
+    Language:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        official:
+          type: boolean
+        iso639:
+          type: string
+        iso3166:
+          type: string
+        names:
+          $ref: '#/components/schemas/ArrayOfNames'
+    Name:
+      type: object
+      properties:
+        name:
+          type: string
+        language:
+          $ref: '#/components/schemas/NamedAPIResource'
+    NamedAPIResource:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+    PokemonAbility:
+      type: object
+      properties:
+        is_hidden:
+          type: boolean
+        slot:
+          type: integer
+        ability:
+          $ref: '#/components/schemas/NamedAPIResource'
+    PokemonType:
+      type: object
+      properties:
+        slot:
+          type: integer
+        type:
+          $ref: '#/components/schemas/NamedAPIResource'
+    PokemonHeldItem:
+      type: object
+      properties:
+        item:
+          $ref: '#/components/schemas/NamedAPIResource'
+        version_details:
+          $ref: '#/components/schemas/PokemonHeldItemVersion'
+    PokemonHeldItemVersion:
+      type: object
+      properties:
+        version:
+          $ref: '#/components/schemas/NamedAPIResource'
+        rarity:
+          type: integer
+    PokemonMove:
+      type: object
+      properties:
+        move:
+          $ref: '#/components/schemas/NamedAPIResource'
+        version_group_details:
+          type: array
+          items:
+            $ref: '#/components/schemas/PokemonMoveVersion'
+    PokemonMoveVersion:
+      type: object
+      properties:
+        move_learn_method:
+          $ref: '#/components/schemas/NamedAPIResource'
+        version_group:
+          $ref: '#/components/schemas/NamedAPIResource'
+        level_learned_at:
+          type: integer
+    PokemonSprites:
+      type: object
+      properties:
+        front_default:
+          type: string
+        front_shiny:
+          type: string
+        front_female:
+          type: string
+        front_shiny_female:
+          type: string
+        back_default:
+          type: string
+        back_shiny:
+          type: string
+        back_female:
+          type: string
+        back_shiny_female:
+          type: string
+    PokemonStat:
+      type: object
+      properties:
+        stat:
+          $ref: '#/components/schemas/NamedAPIResource'
+        effort:
+          type: integer
+        base_stat:
+          type: integer
+    PokemonTypePast:
+      type: object
+      properties:
+        generation:
+          $ref: '#/components/schemas/NamedAPIResource'
+        types:
+          type: array
+          items:
+            $ref: '#/components/schemas/PokemonType'
+    Type:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        damage_relations:
+          $ref: '#/components/schemas/TypeRelations'
+        past_damage_relations:
+          type: array
+          items:
+            $ref: '#/components/schemas/TypeRelationsPast'
+        game_indices:
+          $ref: '#/components/schemas/ArrayOfGenerationGameIndex'
+        generation:
+          $ref: '#/components/schemas/NamedAPIResource'
+        move_damage_class:
+          $ref: '#/components/schemas/NamedAPIResource'
+        names:
+          $ref: '#/components/schemas/ArrayOfNames'
+        pokemon:
+          type: array
+          items:
+            $ref: '#/components/schemas/TypePokemon'
+        moves:
+          $ref: '#/components/schemas/ArrayOfNamedAPIResources'
+    TypePokemon:
+      type: object
+      properties:
+        slot:
+          type: integer
+        pokemon:
+          $ref: '#/components/schemas/NamedAPIResource'
+    TypeRelations:
+      type: object
+      properties:
+        no_damage_to:
+          $ref: '#/components/schemas/NamedAPIResource'
+        half_damage_to:
+          $ref: '#/components/schemas/NamedAPIResource'
+        double_damage_to:
+          $ref: '#/components/schemas/NamedAPIResource'
+        no_damage_from:
+          $ref: '#/components/schemas/NamedAPIResource'
+        half_damage_from:
+          $ref: '#/components/schemas/NamedAPIResource'
+        double_damage_from:
+          $ref: '#/components/schemas/NamedAPIResource'
+    TypeRelationsPast:
+      type: object
+      properties:
+        generation:
+          $ref: '#/components/schemas/NamedAPIResource'
+        damage_relations:
+          $ref: '#/components/schemas/TypeRelations'
+    VerboseEffect:
+      type: object
+      properties:
+        effect:
+          type: string
+        short_effect:
+          type: string
+        language:
+          $ref: '#/components/schemas/NamedAPIResource'
+    VersionEncounterDetail:
+      type: object
+      properties:
+        version:
+          $ref: '#/components/schemas/NamedAPIResource'
+        max_chance:
+          type: integer
+        encounter_details:
+          type: array
+          items:
+            $ref: '#/components/schemas/Encounter'
+    PaginatedResourceWithNameURL:
+      type: object
+      properties:
+        count:
+          type: integer
+        next:
+          type: string
+        previous:
+          type: string
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              url:
+                type: string
