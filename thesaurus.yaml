@@ -8,7 +8,7 @@ servers:
 paths:
   /entries/en/{word}:
     get:
-      description: Search the dictionary in the API for the given word and return all matched results
+      description: Search the thesaurus for a given word.
       operationId: findWord
       parameters:
         - name: word
