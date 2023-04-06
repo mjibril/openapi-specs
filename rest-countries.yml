@@ -240,7 +240,7 @@ paths:
   /v3.1/lang/{lang}:
     get:
       operationId: getByLanguage
-      description: Get a list of countries by ISO 639-1 language code or language name
+      description: Get a list of countries by  ISO 639-2/T 3 letter language code or language name
       parameters:
         - name: lang
           description: the language e.g. spanish or spa
