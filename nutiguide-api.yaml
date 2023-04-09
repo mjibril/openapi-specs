@@ -34,6 +34,7 @@ paths:
           schema:
             type: string
             example: "3017620422003"
+        - $ref: '#/components/parameters/fields'
       responses:
         "200":
           description: OK
@@ -133,6 +134,15 @@ paths:
             type: string
           in: query
           name: traces_tags
+        - schema:
+            type: integer
+          in: query
+          name: page_size
+        - schema:
+            type: integer
+          in: query
+          name: page
+          description: "1-indexed"
 components:
   parameters:
     sort_by:
