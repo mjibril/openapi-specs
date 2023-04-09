@@ -1,0 +1,123 @@
+openapi: 3.0.1
+info:
+  title: Thesaurus
+  description: This is a Thesaurus which uses Wikitionary as a source.
+  version: "2"
+servers:
+  - url: https://api.dictionaryapi.dev/api/v2
+paths:
+  /entries/en/{word}:
+    get:
+      description: Search the thesaurus for a given word.
+      operationId: findWord
+      parameters:
+        - name: word
+          in: path
+          description: The word to search the dictionary for
+          required: true
+          schema:
+            type: string
+            format: string
+      responses:
+        "200":
+          description: A list of the matched words with their linguistic information.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/WordResponse"
+        "404":
+          description: No match found for word
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: "#/components/schemas/NotFoundResponse"
+      servers:
+        - url: https://api.dictionaryapi.dev/api/v2
+    servers:
+      - url: https://api.dictionaryapi.dev/api/v2
+components:
+  schemas:
+    WordResponse:
+      type: array
+      items:
+        $ref: "#/components/schemas/WordItem"
+    WordItem:
+      type: object
+      properties:
+        word:
+          type: string
+        phonetic:
+          type: string
+        phonetics:
+          type: array
+          items:
+            $ref: "#/components/schemas/PhoneticItem"
+        meanings:
+          type: array
+          items:
+            $ref: "#/components/schemas/MeaningItem"
+        license:
+          $ref: "#/components/schemas/License"
+        sourceUrls:
+          type: array
+          items:
+            type: string
+    PhoneticItem:
+      type: object
+      properties:
+        text:
+          type: string
+        audio:
+          type: string
+        sourceUrl:
+          type: string
+        license:
+          $ref: "#/components/schemas/License"
+    MeaningItem:
+      type: object
+      properties:
+        partOfSpeech:
+          type: string
+        definitions:
+          type: array
+          items:
+            $ref: "#/components/schemas/DefinitionItem"
+        synonyms:
+          type: array
+          items:
+            type: string
+        antonyms:
+          type: array
+          items:
+            type: string
+    DefinitionItem:
+      type: object
+      properties:
+        definition:
+          type: string
+        synonyms:
+          type: array
+          items:
+            type: string
+        antonyms:
+          type: array
+          items:
+            type: string
+        example:
+          type: string
+    License:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+    NotFoundResponse:
+      type: object
+      properties:
+        title:
+          type: string
+        message:
+          type: string
+        resolution:
+          type: string

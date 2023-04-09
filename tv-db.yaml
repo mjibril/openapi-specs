@@ -1,0 +1,1674 @@
+openapi: 3.0.3
+info:
+  title: TV DB
+  description: TV DB provides information everything related to TV shows!
+  termsOfService: https://www.tvmaze.com/site/tos
+  contact:
+    email: example@email.com
+  license:
+    name: CC BY-SA
+    url: http://creativecommons.org/licenses/by-sa/4.0/
+  version: 1.0.11
+externalDocs:
+  description: Find out more about TV DB!
+  url: https://www.tvmaze.com
+servers:
+  - url: https://api.tvmaze.com
+tags:
+  - name: search
+    description: Search for shows or people
+    externalDocs:
+      description: Find out more
+      url: https://www.tvmaze.com/api#search
+  - name: shows
+    description: Get information about shows, seasons and episodes
+    externalDocs:
+      description: Find out more
+      url: https://www.tvmaze.com/api#shows
+  - name: episodes
+    description: Get information about specific episodes
+    externalDocs:
+      description: Find out more
+      url: https://www.tvmaze.com/api#episodes
+  - name: people
+    description: Get information about people
+    externalDocs:
+      description: Find out more
+      url: https://www.tvmaze.com/api#people
+paths:
+  /search/shows:
+    get:
+      tags:
+        - search
+      summary: Search through all the shows in our database by the show's name
+      operationId: findShowsInDB
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    score:
+                      type: number
+                      example: 1.427453
+                    show:
+                      $ref: "#/components/schemas/Show"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Bad Request
+                  message:
+                    type: string
+                    example: "Missing required parameters: q"
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 400
+  /singlesearch/shows:
+    get:
+      tags:
+        - search
+      summary: Finds single search result
+      description: Find a single show in the TV DB.
+      operationId: findSingleTVShowInDB
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Show"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Bad Request
+                  message:
+                    type: string
+                    example: "Missing required parameters: q"
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 400
+  /lookup/shows:
+    get:
+      tags:
+        - search
+      summary: Find show by tvrage, thetvdb or IMDB ID
+      description: Find a show show by referencing tvrage, thetvdb or IMDB ID. At least one ID is required.
+      operationId: findShowByReferenceId
+      parameters:
+        - name: tvrage
+          in: query
+          schema:
+            type: integer
+        - name: thetvdb
+          in: query
+          schema:
+            type: integer
+        - name: imdb
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Show"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Bad Request
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 400
+        "404":
+          description: Show not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 404
+  /search/people:
+    get:
+      tags:
+        - search
+      summary: Find people in TV DB Shows
+      operationId: findTVPeople
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    score:
+                      type: number
+                      example: 1
+                    person:
+                      $ref: "#/components/schemas/Person"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Bad Request
+                  message:
+                    type: string
+                    example: "Missing required parameters: q"
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 400
+  /shows/{id}:
+    get:
+      tags:
+        - shows
+      summary: Get all the information for a given show
+      description: Get all the information for a given show
+      operationId: retrieveTVShowInfo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: embed
+          in: query
+          description: optionally embed other information in the response
+          schema:
+            type: string
+            enum:
+              - episodes
+              - cast
+              - crew
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Show"
+        "404":
+          description: Show not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 404
+  /shows/{id}/episodes:
+    get:
+      tags:
+        - shows
+      summary: Get all the episodes of a TV show
+      description: Get all the episodes of a TV show
+      operationId: retieveAllEpisodesByTVShowId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: specials
+          in: query
+          description: include both significant and insignificant specials in the list
+          schema:
+            type: integer
+            enum:
+              - 0
+              - 1
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Episode"
+        "404":
+          description: Show not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 404
+  /shows/{id}/episodebynumber:
+    get:
+      tags:
+        - shows
+      summary: Get information of a TV show episode from a show given season and episode numbers
+      description: Get information of a TV show episode from a show given season and episode numbers
+      operationId: retieveParticularEpisode
+      parameters:
+        - name: id
+          in: path
+          description: ID of show
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: season
+          in: query
+          description: number of season
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: number
+          in: query
+          description: order of the episode within the given season
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Episode"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Bad Request
+                  message:
+                    type: string
+                    example: "Missing required parameters: season"
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 400
+        "404":
+          description: Show not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 404
+  /shows/{id}/episodesbydate:
+    get:
+      tags:
+        - shows
+      summary: Get episodes from a show given episode air date
+      description: Get episodes from a show given episode air date
+      operationId: retieveParticularEpisodeForDate
+      parameters:
+        - name: id
+          in: path
+          description: Id of show
+          required: true
+          schema:
+            type: integer
+            format: int32
+        - name: date
+          in: query
+          description: the date the episode first premiered in ISO 8601 format
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Episode"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Bad Request
+                  message:
+                    type: string
+                    example: "Missing required parameters: date"
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 400
+        "404":
+          description: Show or episode not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 404
+  /shows/{id}/seasons:
+    get:
+      tags:
+        - shows
+      summary: Get all the seasons for the TV show
+      description: Get all the seasons for the TV show
+      operationId: getAllSeasonsForTVShow
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Season"
+        "404":
+          description: Show not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 404
+  /seasons/{id}/episodes:
+    get:
+      tags:
+        - shows
+      summary: Get all the episodes in a given season, specials included.
+      description: Get all the episodes in a given season, specials included.
+      operationId: getAllEpisodesForSeason
+      parameters:
+        - name: id
+          in: path
+          description: season id
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: embed
+          in: query
+          description: optionally embed other information in the response
+          schema:
+            type: string
+            enum:
+              - guestcast
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Episode"
+        "404":
+          description: Season not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 404
+  /shows/{id}/cast:
+    get:
+      tags:
+        - shows
+      summary: Get the main cast for a TV Show!
+      description: Get the main cast for a TV Show!
+      operationId: getActorsForShow
+      parameters:
+        - name: id
+          in: path
+          description: show id
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Cast"
+        "404":
+          description: Show not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 404
+  /shows/{id}/crew:
+    get:
+      tags:
+        - shows
+      summary: Get the crew related to a show
+      description: Get the crew related to a show
+      operationId: getCrewForShow
+      parameters:
+        - name: id
+          in: path
+          description: show id
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                      example: Executive Producer
+                    person:
+                      $ref: "#/components/schemas/Person"
+        "404":
+          description: Show not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 404
+  /shows/{id}/akas:
+    get:
+      tags:
+        - shows
+      summary: Information about the show's alias names!
+      description: Information about the show's alias names!
+      operationId: getAliasesForShow
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: Ходячие мертвецы
+                    country:
+                      $ref: "#/components/schemas/Country"
+        "404":
+          description: Show not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 404
+  /shows/{id}/images:
+    get:
+      tags:
+        - shows
+      summary: Get some images from a show
+      description: Get some images from a show
+      operationId: getImagesForShow
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Image"
+        "404":
+          description: Show not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 404
+  /episodes/{id}:
+    get:
+      tags:
+        - episodes
+      summary: Get all the primary information for a given episode
+      description: Get all the primary information for a given episode
+      operationId: getEpisodeInformationById
+      parameters:
+        - name: id
+          in: path
+          description: Episode id
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: embed
+          in: query
+          description: optionally embed other information in the response
+          schema:
+            type: string
+            enum:
+              - show
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Episode"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Bad Request
+                  message:
+                    type: string
+                    example: Invalid embed type
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 400
+        "404":
+          description: Episode not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 404
+  /episodes/{id}/guestcast:
+    get:
+      tags:
+        - episodes
+      summary: Get the guest cast who featured in an episode
+      description: Get the guest cast who featured in an episode
+      operationId: getGuestCastByEpisodeId
+      parameters:
+        - name: id
+          in: path
+          description: Episode id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Cast"
+        "404":
+          description: Episode not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 404
+  /episodes/{id}/guestcrew:
+    get:
+      tags:
+        - episodes
+      summary: Get the guest crew who featured in an episode
+      description: Get the guest crew who featured in an episode
+      operationId: getGuestCrewForGivenEpisode
+      parameters:
+        - name: id
+          in: path
+          description: Episode id
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    person:
+                      $ref: "#/components/schemas/Person"
+                    guestCrewType:
+                      type: string
+                      example: Director
+        "404":
+          description: Episode not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 404
+  /people/{id}:
+    get:
+      tags:
+        - people
+      summary: Get the  information available for a given person
+      description: Get the  information available for a given person
+      operationId: getInformationForPersonById
+      parameters:
+        - name: id
+          in: path
+          description: person id
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: embed
+          in: query
+          description: optionally embed other information in the response
+          schema:
+            type: string
+            enum:
+              - castcredits
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Person"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Bad Request
+                  message:
+                    type: string
+                    example: Invalid embed type
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 400
+        "404":
+          description: Person not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 404
+  /people/{id}/castcredits:
+    get:
+      tags:
+        - people
+      summary: Get show-level cast credits for a given person
+      description: Get show-level cast credits for a given person
+      operationId: GetCastCreditsForPersonById
+      parameters:
+        - name: id
+          in: path
+          description: person id
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: embed
+          in: query
+          description: optionally embed other information in the response
+          schema:
+            type: string
+            enum:
+              - show
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CastCredit"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Bad Request
+                  message:
+                    type: string
+                    example: Invalid embed type
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 400
+        "404":
+          description: Person not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 404
+  /people/{id}/crewcredits:
+    get:
+      tags:
+        - people
+      summary: Get the show-level crew credits for a person
+      description: Get the show-level crew credits for a person
+      operationId: getCrewCreditsForPersonById
+      parameters:
+        - name: id
+          in: path
+          description: person id
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: embed
+          in: query
+          description: optionally embed other information in the response
+          schema:
+            type: string
+            enum:
+              - show
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CrewCredit"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Bad Request
+                  message:
+                    type: string
+                    example: Invalid embed type
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 400
+        "404":
+          description: Person not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 404
+  /people/{id}/guestcastcredits:
+    get:
+      tags:
+        - people
+      summary: Get episode-level guest cast credits for a particular person
+      description: Get episode-level guest cast credits for a particular person
+      operationId: getGuestCastCreditsForPersonById
+      parameters:
+        - name: id
+          in: path
+          description: person id
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: embed
+          in: query
+          description: optionally embed other information in the response
+          schema:
+            type: string
+            enum:
+              - episode
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GuestCastCredit"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Bad Request
+                  message:
+                    type: string
+                    example: Invalid embed type
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 400
+        "404":
+          description: Person not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Not Found
+                  message:
+                    type: string
+                    example: ""
+                  code:
+                    type: integer
+                    example: 0
+                  status:
+                    type: integer
+                    example: 404
+components:
+  schemas:
+    Show:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 73
+        url:
+          type: string
+          example: https://www.tvmaze.com/shows/73/the-walking-dead
+        name:
+          type: string
+          example: The Walking Dead
+        type:
+          type: string
+          example: Scripted
+        language:
+          type: string
+          example: English
+        genres:
+          type: array
+          items:
+            type: string
+          example:
+            - Drama
+            - Action
+            - Horror
+        status:
+          type: string
+          example: Ended
+        runtime:
+          description: time of day the show typically airs
+          type: integer
+          example: null
+        averageRuntime:
+          type: integer
+          example: 62
+        premiered:
+          type: string
+          example: "2010-10-31T00:00:00.000Z"
+        ended:
+          type: string
+          example: "2022-11-20T00:00:00.000Z"
+        officialSite:
+          type: string
+          example: https://www.amc.com/twdu/the-walking-dead
+        schedule:
+          type: object
+          properties:
+            time:
+              type: string
+              example: ""
+            days:
+              type: array
+              items:
+                type: string
+              example:
+                - Sunday
+        rating:
+          type: object
+          properties:
+            average:
+              description: average rating of the show on TV Maze
+              type: number
+              example: 8
+        weight:
+          type: integer
+          example: 100
+        network:
+          $ref: "#/components/schemas/Channel"
+        webChannel:
+          $ref: "#/components/schemas/Channel"
+        dvdCountry:
+          type: string
+          example: null
+        externals:
+          description: ids of the show from external websites
+          type: object
+          properties:
+            tvrage:
+              type: integer
+              example: 25056
+            thetvdb:
+              type: integer
+              example: 153021
+            imdb:
+              type: string
+              example: tt1520211
+        image:
+          type: object
+          properties:
+            medium:
+              type: string
+              example: https://static.tvmaze.com/uploads/images/medium_portrait/424/1061900.jpg
+            original:
+              type: string
+              example: https://static.tvmaze.com/uploads/images/original_untouched/424/1061900.jpg
+        summary:
+          type: string
+          example: <p><b>The Walking Dead</b> tells the story of the months and years that follow after a zombie apocalypse. It follows a group of survivors, led by former police officer Rick Grimes, who travel in search of a safe and secure home. As the world overrun by the dead takes its toll on the survivors, their interpersonal conflicts present a greater danger to their continuing survival than the walkers that roam the country. Over time, the characters are changed by the constant exposure to death and some grow willing to do anything to survive.</p><p>Based on the comic book series of the same name by Robert Kirkman, Tony Moore, and Charlie Adlard.</p>
+        updated:
+          type: integer
+          format: int64
+          example: 1669133052
+        _links:
+          type: object
+          properties:
+            self:
+              $ref: "#/components/schemas/showLink"
+            previousepisode:
+              $ref: "#/components/schemas/episodeLink"
+            nextepisode:
+              $ref: "#/components/schemas/episodeLink"
+        _embedded:
+          type: object
+          description: additional information related to the show, only appears when the embed parameter is used
+          properties:
+            episodes:
+              description: list of the show's episodes
+              type: array
+              items:
+                $ref: "#/components/schemas/Episode"
+            cast:
+              description: list of the show's cast members
+              type: array
+              items:
+                $ref: "#/components/schemas/Cast"
+            crew:
+              description: list of the show's crew members
+              type: array
+              items:
+                type: object
+                properties:
+                  type:
+                    type: string
+                    example: Executive Producer
+                  person:
+                    $ref: "#/components/schemas/Person"
+    Person:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          description: person id
+          type: integer
+          format: int32
+          example: 46432
+        url:
+          type: string
+          example: https://www.tvmaze.com/people/46432/tom-hanks
+        name:
+          type: string
+          example: Tom Hanks
+        country:
+          $ref: "#/components/schemas/Country"
+        birthday:
+          type: string
+          example: "1956-07-09"
+        deathday:
+          description: the day the person died, if any
+          type: string
+          example: null
+        gender:
+          type: string
+          example: Male
+        image:
+          type: object
+          properties:
+            medium:
+              type: string
+              example: https://static.tvmaze.com/uploads/images/medium_portrait/28/72307.jpg
+            original:
+              type: string
+              example: https://static.tvmaze.com/uploads/images/original_untouched/28/72307.jpg
+        updated:
+          type: integer
+          format: int64
+          example: 1676425316
+        _links:
+          type: object
+          properties:
+            self:
+              $ref: "#/components/schemas/personLink"
+        _embedded:
+          type: object
+          properties:
+            castcredits:
+              type: array
+              items:
+                $ref: "#/components/schemas/CastCredit"
+    Episode:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 4095
+        url:
+          type: string
+          example: https://www.tvmaze.com/episodes/4095/the-walking-dead-1x01-days-gone-bye
+        name:
+          type: string
+          example: Days Gone Bye
+        season:
+          type: integer
+          example: 1
+        number:
+          type: integer
+          example: 1
+        type:
+          type: string
+          example: regular
+        airdate:
+          type: string
+          example: "2010-10-31T00:00:00.000Z"
+        airtime:
+          type: string
+          example: "22:00"
+        airstamp:
+          type: string
+          example: "2010-11-01T02:00:00.000Z"
+        runtime:
+          type: integer
+          example: 60
+        rating:
+          type: object
+          properties:
+            average:
+              type: number
+              example: 9.1
+        image:
+          type: object
+          properties:
+            medium:
+              type: string
+              example: https://static.tvmaze.com/uploads/images/medium_landscape/0/2104.jpg
+            original:
+              type: string
+              example: https://static.tvmaze.com/uploads/images/original_untouched/0/2104.jpg
+        summary:
+          type: string
+          example: <p>Rick searches for his family after emerging from a coma into a world terrorized by the walking dead. Morgan and Duane, whom he meets along the way, help teach Rick the new rules for survival.</p>
+        _links:
+          type: object
+          properties:
+            self:
+              $ref: "#/components/schemas/episodeLink"
+            show:
+              $ref: "#/components/schemas/showLink"
+        _embedded:
+          $ref: "#/components/schemas/Show"
+    Season:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 263
+        url:
+          type: string
+          example: https://www.tvmaze.com/seasons/263/the-walking-dead-season-1
+        number:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: ""
+        episodeOrder:
+          type: integer
+          example: 6
+        premiereDate:
+          type: string
+          example: "2010-10-31T00:00:00.000Z"
+        endDate:
+          type: string
+          example: "2010-12-05T00:00:00.000Z"
+        network:
+          $ref: "#/components/schemas/Channel"
+        webChannel:
+          $ref: "#/components/schemas/Channel"
+        image:
+          type: object
+          properties:
+            medium:
+              type: string
+              example: https://static.tvmaze.com/uploads/images/medium_portrait/24/61350.jpg
+            original:
+              type: string
+              example: https://static.tvmaze.com/uploads/images/original_untouched/24/61350.jpg
+        summary:
+          type: string
+          example: <p>Deputy Rick Grimes wakes up from a coma in an abandoned hospital after surviving a shooting. Outside the hospital the world is a nightmare, the dead have re-animated. Walkers, as they're called, are everywhere. After meeting a man and his son, Rick learns that his wife and son (Lori and Carl) may have fled to Atlanta, where the Center for Disease Control has set up a quarantine zone. He arms himself and sets out for the city.</p><p>Rick's best friend has helped Lori and Carl survive, and they are living just outside of Atlanta in a makeshift camp for a handful of survivors. Rick arrives in Atlanta to find it completely overrun by walkers. He's rescued by people from the camp and reunited with Lori, Carl, and Shane. Rick assumes control of the group and following an attack by a horde of walkers, they flee for the CDC.</p><p>At the CDC, they find one surviving doctor. He knows a bit about the pathology of the virus, but has no cure. Before long the CDC building activates safety protocols as it runs out of fuel. Rick's group barely manages to escape before the building incinerates.</p>
+        _links:
+          type: object
+          properties:
+            self:
+              $ref: "#/components/schemas/seasonLink"
+    Character:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 10764
+        url:
+          type: string
+          example: https://www.tvmaze.com/characters/10764/the-walking-dead-daryl-dixon
+        name:
+          type: string
+          example: Daryl Dixon
+        image:
+          type: object
+          properties:
+            medium:
+              type: string
+              example: https://static.tvmaze.com/uploads/images/medium_portrait/166/417474.jpg
+            original:
+              type: string
+              example: https://static.tvmaze.com/uploads/images/original_untouched/166/417474.jpg
+        _links:
+          type: object
+          properties:
+            self:
+              $ref: "#/components/schemas/characterLink"
+        self:
+          type: boolean
+          description: whether the cast is appearing as him/herself
+          example: false
+        voice:
+          type: boolean
+          description: whether the cast member is a voice actor/actress in this show
+          example: false
+    Cast:
+      type: object
+      properties:
+        person:
+          $ref: "#/components/schemas/Person"
+        character:
+          $ref: "#/components/schemas/Character"
+    Image:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 509
+        type:
+          type: string
+          example: poster
+        main:
+          type: boolean
+          example: false
+        resolutions:
+          type: object
+          properties:
+            original:
+              type: object
+              properties:
+                url:
+                  type: string
+                  example: https://static.tvmaze.com/uploads/images/original_untouched/0/509.jpg
+                width:
+                  type: integer
+                  example: 680
+                height:
+                  type: integer
+                  example: 1000
+            medium:
+              type: object
+              properties:
+                url:
+                  type: string
+                  example: https://static.tvmaze.com/uploads/images/medium_portrait/0/509.jpg
+                width:
+                  type: integer
+                  example: 210
+                height:
+                  type: integer
+                  example: 295
+    CastCredit:
+      type: object
+      properties:
+        self:
+          type: boolean
+          description: whether the person appeared as him/herself
+          example: false
+        voice:
+          type: boolean
+          description: whether the person appeared as voice actor/actress
+          example: false
+        _links":
+          type: object
+          properties:
+            show:
+              $ref: "#/components/schemas/showLink"
+            character:
+              $ref: "#/components/schemas/characterLink"
+        _embedded:
+          $ref: "#/components/schemas/Show"
+    GuestCastCredit:
+      type: object
+      properties:
+        self:
+          type: boolean
+          description: whether the person appeared as him/herself
+          example: false
+        voice:
+          type: boolean
+          description: whether the person appeared as voice actor/actress
+          example: false
+        _links":
+          type: object
+          properties:
+            episode:
+              $ref: "#/components/schemas/episodeLink"
+            character:
+              $ref: "#/components/schemas/characterLink"
+        _embedded:
+          $ref: "#/components/schemas/Episode"
+    CrewCredit:
+      type: object
+      properties:
+        type:
+          type: string
+          example: Executive Producer
+        _links":
+          type: object
+          properties:
+            show:
+              $ref: "#/components/schemas/showLink"
+        _embedded:
+          $ref: "#/components/schemas/Show"
+    Country:
+      type: object
+      properties:
+        name:
+          type: string
+          example: United States
+        code:
+          type: string
+          example: US
+        timezone:
+          type: string
+          example: America/New_York
+    Channel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          example: 453
+        name:
+          type: string
+          example: AMC+
+        country:
+          $ref: "#/components/schemas/Country"
+        officialSite:
+          type: string
+          example: null
+    showLink:
+      type: object
+      properties:
+        href:
+          type: string
+          example: https://api.tvmaze.com/shows/73
+    episodeLink:
+      type: object
+      properties:
+        href:
+          type: string
+          example: https://api.tvmaze.com/episodes/2408243
+    personLink:
+      type: object
+      properties:
+        href:
+          type: string
+          example: https://api.tvmaze.com/people/46432
+    seasonLink:
+      type: object
+      properties:
+        href:
+          type: string
+          example: https://api.tvmaze.com/seasons/263
+    characterLink:
+      type: object
+      properties:
+        href:
+          type: string
+          example: https://api.tvmaze.com/characters/10764

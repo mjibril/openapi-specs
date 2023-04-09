@@ -1,0 +1,247 @@
+openapi: 3.0.3
+info:
+  title: Ciders club - OpenAPI 3.0
+  description: |-
+    Ciders club shares information on breweries, cideries, brewpubs and bottleshops!
+    - [Information Here](https://www.openbrewerydb.org)
+  contact:
+    email: rauber@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.2
+externalDocs:
+  description: Docs
+  url: https://www.openbrewerydb.org/documentation
+servers:
+  - url: https://api.openbrewerydb.org/
+tags:
+  - name: breweries
+    description: Breweries Endpoints
+paths:
+  /breweries/{obdb-id}:
+    get:
+      tags:
+        - breweries
+      summary: "Get a single brewery."
+      description: "Get a single brewery by ID."
+      operationId: getInformationForBreweryById
+      parameters:
+        - name: obdb-id
+          in: path
+          description: "Brewery ID"
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Brewery"
+        "400":
+          description: "Invalid Brewery ID supplied"
+        "404":
+          description: "Brewery not found"
+        "405":
+          description: "Validation exception"
+
+  /breweries:
+    get:
+      tags:
+        - breweries
+      summary: "Returns a list of breweries."
+      description: "Fetches all breweries in the db."
+      operationId: fetchBreweriesList
+      parameters:
+        - name: by_city
+          in: query
+          description: "Filter breweries by city."
+          required: false
+          schema:
+            type: string
+            example: "seattle"
+        - name: by_dist
+          in: query
+          description: "Sort the results by distance from an origin point. e.g:38.8977,77.0365"
+          required: false
+          schema:
+            type: string
+            example: "38.8977,77.0365"
+        - name: by_name
+          in: query
+          description: "Filter breweries by name."
+          required: false
+          schema:
+            type: string
+            example: "brewdog"
+        - name: by_state
+          in: query
+          description: "Filter breweries by state. Full state name is required, no abbreviations."
+          required: false
+          schema:
+            type: string
+            example: "new_york"
+        - name: by_postal
+          in: query
+          description: "Filter breweries by postal code."
+          required: false
+          schema:
+            type: string
+            example: "44107"
+        - name: by_type
+          in: query
+          description: "Filter by type of brewery."
+          required: false
+          schema:
+            type: string
+            example: "brewpub"
+            enum:
+              - micro
+              - nano
+              - regional
+              - brewpub
+              - large
+              - planning
+              - bar
+              - contract
+              - proprieter
+              - closed
+        - name: page
+          in: query
+          description: "The offset or page of breweries to return."
+          required: false
+          schema:
+            type: integer
+            example: 1
+        - name: per_page
+          in: query
+          description: "Number of breweries to return on each call. Default is 20, max is 50."
+          required: false
+          schema:
+            type: integer
+            example: 10
+            default: 20
+        - name: sort
+          in: query
+          description: "Sort the results by one or more fields. e.g: type,name:asc"
+          required: false
+          schema:
+            type: string
+            example: "type,name:asc"
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Brewery"
+        "400":
+          description: "Invalid status value"
+
+  /breweries/random:
+    get:
+      tags:
+        - breweries
+      summary: "Get a random brewery."
+      operationId: fetchBreweryRandomly
+      parameters:
+        - name: size
+          in: query
+          description: "Number of breweries to return on each call. Default is 1, max is 50."
+          required: false
+          schema:
+            type: integer
+            default: 1
+            example: 3
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Brewery"
+        "400":
+          description: "Invalid status value"
+
+  /breweries/search:
+    get:
+      tags:
+        - breweries
+      summary: "Search for breweries based on a term."
+      description: "Find breweries!"
+      operationId: brewerySearchQuery
+      parameters:
+        - name: query
+          in: query
+          description: "Search term."
+          required: false
+          schema:
+            type: string
+            example: "dog"
+        - name: per_page
+          in: query
+          description: "Number of breweries to return on each call. Default is 20, max is 50."
+          required: false
+          schema:
+            type: integer
+            example: 10
+            default: 20
+      responses:
+        "200":
+          description: "Successful operation"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Brewery"
+        "400":
+          description: "Invalid status value"
+
+components:
+  schemas:
+    Brewery:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        brewery_type:
+          type: string
+        street:
+          type: string
+        address_2:
+          type: string
+        address_3:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        county_province:
+          type: string
+        postal_code:
+          type: string
+        country:
+          type: string
+        longitude:
+          type: string
+        latitude:
+          type: string
+        phone:
+          type: string
+        website_url:
+          type: string
+        updated_at:
+          type: string
+        created_at:
+          type: string
+      xml:
+        name: brewery
